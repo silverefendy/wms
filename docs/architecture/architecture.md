@@ -4,6 +4,18 @@
 
 WMS is a warehouse workflow and application layer built on top of ERPNext. It does not replace ERPNext's core functionality but extends it with warehouse-specific operations.
 
+## Frappe Module Structure
+
+The application package exposes the registered `WMS` Frappe module. Future warehouse and inventory DocTypes will be added beneath this module as their implementation begins.
+
+```text
+WMS Application
+    ↓
+WMS Frappe Module
+    ↓
+Future warehouse/inventory DocTypes
+```
+
 ## Architecture Diagram
 
 ```mermaid

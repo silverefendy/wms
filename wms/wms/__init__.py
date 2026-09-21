@@ -1,0 +1,1 @@
+"""WMS Frappe module namespace."""
