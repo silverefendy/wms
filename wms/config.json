@@ -1,0 +1,11 @@
+{
+"app_name": "wms",
+"app_title": "WMS",
+"app_publisher": "Efendy",
+"app_version": "0.0.1",
+"description": "Inventory and Warehouse Management System built on Frappe Framework and ERPNext.",
+"allow_guest": false,
+"installation": false,
+"license": "Proprietary",
+"restricted": false
+}

@@ -1,0 +1,5 @@
+# License: Proprietary
+# Status: Undecided
+# Reason: License has not been formally decided yet.
+# Current recommendation: Use MIT or GPL v3 for open-source distribution.
+# Decision required before production deployment.
