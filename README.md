@@ -1,4 +1,4 @@
-# WMS — Inventory & Warehouse Management System
+# WMS â€” Inventory & Warehouse Management System
 
 ## Overview
 
