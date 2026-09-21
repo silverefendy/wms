@@ -73,8 +73,10 @@ graph TD
 - Node.js 24
 - MariaDB 11.8
 - Redis/Valkey 6+
+- Yarn 1.22+
+- pip 25.3+
 
-Use the exact patch/minor versions and supported host packages from the current official Frappe v16 installation guidance.
+These requirements follow the current official Frappe v16 installation guidance. Use its exact current patch/minor versions and supported host packages when setting up a Bench.
 
 ## Installation
 

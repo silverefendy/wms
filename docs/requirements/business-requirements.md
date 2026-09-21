@@ -13,8 +13,8 @@ The WMS system is designed to support:
 ## Initial Scale
 
 **Starting configuration:**
-- Approximately 100–1,000 Items
-- Approximately 20–100 users
+- Approximately 100â€“1,000 Items
+- Approximately 20â€“100 users
 - One company
 - One branch
 - One warehouse

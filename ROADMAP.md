@@ -1,8 +1,8 @@
 # Roadmap
 
-## Phase 0 — Foundation
+## Phase 0 â€” Foundation
 
-**Status**: In Progress
+**Status**: Complete
 
 - [x] Frappe v16 target selection
 - [x] ERPNext v16 target selection
@@ -14,7 +14,7 @@
 - [ ] Production architecture design
 - [ ] Backup strategy definition
 
-## Phase 1 — Master Data Integration
+## Phase 1 â€” Master Data Integration
 
 **Status**: Not Started
 
@@ -31,7 +31,7 @@
 - [ ] Shelf configuration
 - [ ] Bin configuration
 
-## Phase 2 — Core Warehouse
+## Phase 2 â€” Core Warehouse
 
 **Status**: Not Started
 
@@ -43,7 +43,7 @@
 - [ ] Stock Count workflow
 - [ ] Adjustment workflow
 
-## Phase 3 — Purchasing Integration
+## Phase 3 â€” Purchasing Integration
 
 **Status**: Not Started
 
@@ -54,7 +54,7 @@
 - [ ] Quality Check workflow
 - [ ] Putaway after receiving
 
-## Phase 4 — Sales Integration
+## Phase 4 â€” Sales Integration
 
 **Status**: Not Started
 
@@ -66,7 +66,7 @@
 - [ ] Sales Invoice integration
 - [ ] Return workflow
 
-## Phase 5 — POS / Kiosk
+## Phase 5 â€” POS / Kiosk
 
 **Status**: Not Started
 
@@ -78,7 +78,7 @@
 - [ ] Discount approval workflow
 - [ ] Returns processing
 
-## Phase 6 — Mobile
+## Phase 6 â€” Mobile
 
 **Status**: Not Started
 
@@ -90,7 +90,7 @@
 - [ ] Mobile picking
 - [ ] Mobile packing
 
-## Phase 7 — Offline
+## Phase 7 â€” Offline
 
 **Status**: Not Started
 
@@ -101,7 +101,7 @@
 - [ ] Conflict resolution
 - [ ] Sync audit trail
 
-## Phase 8 — Advanced
+## Phase 8 â€” Advanced
 
 **Status**: Not Started
 

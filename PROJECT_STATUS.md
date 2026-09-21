@@ -20,7 +20,8 @@
 - Business and architecture documentation complete
 - No operational WMS workflows implemented yet
 - No operational custom DocTypes implemented yet
-- Full Frappe/ERPNext installation validation remains to be performed in a real Frappe v16 Bench environment
+- Frappe Integration Test: Passed in a disposable Frappe v16 + ERPNext v16 Bench
+- ERPNext Integration Smoke Test: Passed
 
 ## Not Implemented Yet
 
@@ -52,6 +53,4 @@
 
 ## Next Steps
 
-1. Set up a disposable Frappe v16 + ERPNext v16 development Bench
-2. Validate installation, migration, and build in that Bench
-3. Begin Phase 1: Master Data Integration
+1. Begin Phase 1: Master Data Integration

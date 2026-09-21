@@ -41,3 +41,6 @@ This directory contains the complete documentation for the WMS project.
 - [ADR-0002](decisions/ADR-0002-wms-application-boundary.md) - WMS application boundary
 - [ADR-0003](decisions/ADR-0003-erpnext-item-and-variant-master.md) - ERPNext item and variant master
 - [ADR-0004](decisions/ADR-0004-offline-first-design.md) - Offline-first design
+
+### [Testing](testing/)
+- [Foundation Validation](testing/foundation-validation.md) - Disposable Frappe/ERPNext installation gate

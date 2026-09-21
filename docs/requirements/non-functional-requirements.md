@@ -54,8 +54,8 @@ Important transactions must identify:
 
 ### Initial Scale
 - 1 company / 1 branch / 1 warehouse
-- 100–1,000 items
-- 20–100 users
+- 100â€“1,000 items
+- 20â€“100 users
 
 ### Target Scale
 - Multiple companies
