@@ -51,7 +51,7 @@ WMS will NOT create a separate stock ledger. All stock balances and stock moveme
 - Limited ability to customize stock behavior
 
 ### WMS Integration Requirements
-- All stock movements must create ERPNext Stock Entry
+- All stock-affecting WMS operations must ultimately be recorded through the appropriate standard ERPNext stock-affecting document/API. The appropriate transaction depends on the business event and may include Purchase Receipt, Delivery Note, Sales Invoice with stock update, Purchase Invoice with stock update, Stock Entry, Stock Reconciliation, POS Invoice/stock flow, or manufacturing transactions.
 - WMS workflows must trigger ERPNext transactions
 - WMS cannot directly manipulate stock balances
 - WMS must use Frappe APIs for stock operations
@@ -74,7 +74,7 @@ WMS will NOT create a separate stock ledger. All stock balances and stock moveme
 ### Stock Movement Flow
 ```
 WMS Workflow
-  ? ERPNext Stock Entry
+  ? Appropriate ERPNext stock-affecting document/API
   ? ERPNext Stock Ledger
   ? ERPNext Accounting
 ```

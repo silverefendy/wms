@@ -48,7 +48,7 @@ ERPNext Item
 - **Item**: Product master data
 - **Item Variant**: Product variants
 - **Warehouse**: Storage location
-- **Stock Entry**: Stock movement
+- **Standard stock-affecting documents**: Business-event transactions such as Purchase Receipt, Delivery Note, Stock Entry, Stock Reconciliation, POS Invoice, and manufacturing documents
 - **Stock Ledger**: Stock balance history
 - **Purchase Order**: Purchasing request
 - **Purchase Receipt**: Goods receipt
@@ -112,8 +112,8 @@ Create a custom DocType only if:
 #### Stock Movement
 ```
 WMS Workflow Document
-  ? References ERPNext Stock Entry
-  ? References ERPNext Stock Ledger (via Stock Entry)
+  ? References the relevant ERPNext stock-affecting document/API
+  ? Reads ERPNext Stock Ledger through standard ERPNext access
   ? References ERPNext Item
   ? References ERPNext Warehouse
   ? References WMS Locations (Zone/Aisle/Rack/Shelf/Bin)
@@ -125,7 +125,7 @@ ERPNext Purchase Order
   ? ERPNext Purchase Receipt
   ? WMS Receiving Document
   ? WMS Putaway Document
-  ? ERPNext Stock Entry
+  ? Appropriate ERPNext stock-affecting document
 ```
 
 #### Sales Integration
@@ -134,14 +134,14 @@ ERPNext Sales Order
   ? WMS Picking Document
   ? WMS Packing Document
   ? ERPNext Delivery Note
-  ? ERPNext Stock Entry
+  ? Appropriate ERPNext stock-affecting document
 ```
 
 ## Data Integrity
 
 ### Constraints
-- All stock movements must create ERPNext Stock Entry
-- Stock balances must only be updated via ERPNext Stock Entry
+- All stock-affecting WMS operations must ultimately be recorded through the appropriate standard ERPNext stock-affecting document/API
+- WMS must not maintain or directly modify a competing stock ledger or stock balance
 - WMS documents must reference valid ERPNext documents
 - Location hierarchy must be valid (parent must exist)
 

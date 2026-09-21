@@ -91,7 +91,7 @@ Prepare picked items for shipment, ensuring proper packaging and documentation.
 
 ### Documents Created
 - Delivery Note (ERPNext)
-- Stock Entry (ERPNext) - via Delivery Note
+- Standard ERPNext stock-affecting document - via Delivery Note
 
 ### Documents Referenced
 - Sales Order (ERPNext)
@@ -100,8 +100,7 @@ Prepare picked items for shipment, ensuring proper packaging and documentation.
 - Customer (ERPNext)
 
 ### Stock Ledger Impact
-- Delivery Note creates Stock Entry
-- Stock Entry updates Stock Ledger
+- Delivery Note updates stock through normal ERPNext processing
 - Stock decreased from warehouse
 
 ## Remarks

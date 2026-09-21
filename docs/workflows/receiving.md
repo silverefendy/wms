@@ -79,7 +79,7 @@ Process inbound goods from suppliers and record their receipt into the warehouse
 
 ### Documents Created
 - Purchase Receipt (ERPNext)
-- Stock Entry (ERPNext) - via Putaway workflow
+- Appropriate ERPNext stock-affecting document - via Putaway workflow
 
 ### Documents Referenced
 - Purchase Order (ERPNext)

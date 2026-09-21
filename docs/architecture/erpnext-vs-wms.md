@@ -10,7 +10,7 @@
 | **Warehouse** | System of record | Extend for operational hierarchy |
 | **Stock Ledger** | System of record | Do not duplicate |
 | **Stock Valuation** | System of record | Use |
-| **Stock Entry** | System of record | Trigger/use |
+| **Stock-affecting documents** | System of record | Trigger/use the appropriate standard document/API |
 | **Purchase Order** | System of record | Use |
 | **Purchase Receipt** | System of record | Warehouse workflow around it |
 | **Sales Order** | System of record | Use |
@@ -60,7 +60,8 @@ WMS provides:
 - Duplicate ERPNext master data
 
 ### WMS DOES
-- Use ERPNext Stock Entry for all stock movements
+- Use the appropriate standard ERPNext stock-affecting document/API for each business event
+- Never maintain or directly modify a competing stock ledger
 - Trigger ERPNext documents from WMS workflows
 - Extend ERPNext Warehouse with operational hierarchy
 - Provide warehouse-specific user interfaces

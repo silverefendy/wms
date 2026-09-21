@@ -23,7 +23,7 @@ Receiving Workflow (WMS)
   ?
 Putaway Workflow (WMS)
   ?
-Stock Entry (ERPNext)
+Appropriate ERPNext stock-affecting document
   ?
 Purchase Invoice (ERPNext)
   ?
@@ -43,10 +43,9 @@ Payment (ERPNext)
 - WMS adds barcode scanning and location assignment
 - WMS triggers Putaway workflow after receipt
 
-#### Stock Entry
-- WMS Putaway creates ERPNext Stock Entry
-- Stock Entry updates Stock Ledger
-- Stock Entry triggers accounting entries
+#### Stock-affecting transaction
+- WMS uses the standard ERPNext document appropriate to the business event
+- ERPNext updates the Stock Ledger and accounting through normal document processing
 
 ### WMS Responsibilities
 - Receiving workflow with barcode scanning
@@ -57,7 +56,7 @@ Payment (ERPNext)
 ### ERPNext Responsibilities
 - Purchase Order management
 - Purchase Receipt creation
-- Stock Entry processing
+- Standard stock-affecting document processing
 - Stock Ledger updates
 - Accounting entries
 - Payment processing
@@ -103,8 +102,7 @@ Payment (ERPNext)
 #### Delivery Note
 - ERPNext Delivery Note records delivery
 - WMS triggers Delivery Note creation after packing
-- Delivery Note creates Stock Entry
-- Stock Entry updates Stock Ledger
+- Delivery Note updates stock through normal ERPNext processing
 
 ### WMS Responsibilities
 - Picking workflow with location guidance
@@ -115,7 +113,7 @@ Payment (ERPNext)
 ### ERPNext Responsibilities
 - Sales Order management
 - Delivery Note creation
-- Stock Entry processing
+- Standard stock-affecting document processing
 - Stock Ledger updates
 - Sales Invoice creation
 - Payment processing
@@ -131,7 +129,7 @@ ERPNext POS
   ?
 POS Invoice (ERPNext)
   ?
-Stock Entry (ERPNext)
+Appropriate ERPNext stock-affecting document
   ?
 Stock Ledger (ERPNext)
   ?
@@ -146,9 +144,8 @@ Accounting (ERPNext)
 - WMS does not create separate POS stock engine
 
 #### Stock Updates
-- POS Invoice triggers Stock Entry
-- Stock Entry updates Stock Ledger
-- Stock Entry triggers accounting entries
+- POS Invoice uses the standard ERPNext POS stock flow
+- ERPNext updates the Stock Ledger and accounting through normal document processing
 
 ### WMS Responsibilities
 - Custom POS UI (future)
@@ -158,23 +155,23 @@ Accounting (ERPNext)
 
 ### ERPNext Responsibilities
 - POS Invoice creation
-- Stock Entry processing
+- Standard stock-affecting document processing
 - Stock Ledger updates
 - Accounting entries
 - Payment processing
 
-## Stock Entry Integration
+## Standard Stock-Affecting Document Integration
 
 ### Direct Stock Entry
 - Users can create Stock Entry directly in ERPNext
 - WMS does not prevent direct Stock Entry
 - WMS provides workflow around Stock Entry for complex operations
 
-### WMS-Triggered Stock Entry
-- WMS workflows create Stock Entry
-- Stock Entry is created via Frappe API
-- Stock Entry follows ERPNext validation
-- Stock Entry updates Stock Ledger
+### WMS-Triggered ERPNext Transactions
+- WMS workflows use the standard ERPNext stock-affecting document appropriate to the business event
+- Examples include Purchase Receipt, Delivery Note, Sales Invoice with stock update, Purchase Invoice with stock update, Stock Entry, Stock Reconciliation, POS Invoice/stock flow, and manufacturing transactions
+- Documents are created or updated through the Frappe/ERPNext API and follow ERPNext validation
+- The selected standard document updates ERPNext's Stock Ledger through normal ERPNext processing
 
 ## Stock Ledger Integration
 
@@ -184,7 +181,7 @@ Accounting (ERPNext)
 - WMS uses Frappe API for queries
 
 ### Write Access
-- Stock Ledger is only updated via Stock Entry
+- Stock Ledger is updated only through normal ERPNext processing of standard stock-affecting documents
 - WMS does not write to Stock Ledger directly
 - WMS does not use SQL to modify Stock Ledger
 

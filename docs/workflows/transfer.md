@@ -47,7 +47,7 @@ Move stock between locations within the same warehouse or between warehouses.
 7. **Complete Transfer**
    - Operator confirms transfer complete
    - System creates ERPNext Stock Entry
-   - Stock Entry updates Stock Ledger
+   - ERPNext updates the Stock Ledger through the standard stock-affecting document flow
    - Stock moved from source to destination
 
 ## Exceptions

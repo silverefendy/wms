@@ -96,7 +96,7 @@ Select and collect items from warehouse locations to fulfill sales orders.
 
 ### Documents Created (Future)
 - Delivery Note (ERPNext) - after packing
-- Stock Entry (ERPNext) - after delivery
+- Standard ERPNext stock-affecting document - after delivery
 
 ### Stock Reservation (Future)
 - Reserve stock when picking starts

@@ -94,7 +94,7 @@ WMS provides:
 ### ERPNext Documents Used
 - **Item**: Master data for products
 - **Warehouse**: Storage location definition
-- **Stock Entry**: Stock movement transactions
+- **Standard stock-affecting documents**: Transactions appropriate to the business event, such as Purchase Receipt, Delivery Note, Stock Entry, Stock Reconciliation, POS Invoice, or manufacturing documents
 - **Stock Ledger**: Stock balance tracking
 - **Purchase Order/Receipt**: Purchasing integration
 - **Sales Order/Delivery**: Sales integration
@@ -116,14 +116,14 @@ Purchase Order (ERPNext)
   ? Purchase Receipt (ERPNext)
   ? Receiving Workflow (WMS)
   ? Putaway Workflow (WMS)
-  ? Stock Entry (ERPNext)
+  ? Appropriate ERPNext stock-affecting document
   ? Stock Ledger (ERPNext)
 ```
 
 ### Internal Flow
 ```
 Transfer Request (WMS)
-  ? Stock Entry (ERPNext)
+  ? Appropriate ERPNext stock-affecting document
   ? Stock Ledger (ERPNext)
 ```
 
@@ -133,7 +133,7 @@ Sales Order (ERPNext)
   ? Picking Workflow (WMS)
   ? Packing Workflow (WMS)
   ? Delivery Note (ERPNext)
-  ? Stock Entry (ERPNext)
+  ? Appropriate ERPNext stock-affecting document
   ? Stock Ledger (ERPNext)
 ```
 
@@ -141,8 +141,8 @@ Sales Order (ERPNext)
 
 ### Backend
 - Frappe Framework v16
-- Python 3.10+
-- MariaDB 10.6+
+- Python 3.14
+- MariaDB 11.8
 - Redis/Valkey
 
 ### Frontend

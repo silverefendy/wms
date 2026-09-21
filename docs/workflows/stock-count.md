@@ -47,8 +47,8 @@ Physically count stock in a location and reconcile with system records.
    - Manager approves adjustment if needed
 
 7. **Create Adjustment**
-   - If discrepancy approved, system creates Stock Entry
-   - Stock Entry adjusts Stock Ledger
+   - If discrepancy is approved, the system records it through the appropriate ERPNext stock-affecting document/API
+   - ERPNext updates the Stock Ledger through normal document processing
    - Stock count marked as complete
 
 ## Exceptions
@@ -93,7 +93,7 @@ Physically count stock in a location and reconcile with system records.
 ## ERPNext Integration
 
 ### Documents Created
-- Stock Entry (ERPNext) - Stock Adjustment type
+- Stock Reconciliation or another appropriate ERPNext stock-affecting document
 - Stock Reconciliation (ERPNext) - alternative approach
 
 ### Documents Referenced
@@ -103,7 +103,7 @@ Physically count stock in a location and reconcile with system records.
 - Stock Ledger (ERPNext) - for expected quantity
 
 ### Stock Ledger Impact
-- Stock Entry updates Stock Ledger
+- ERPNext updates the Stock Ledger through normal document processing
 - Stock adjusted to counted quantity
 - Accounting entries created for value adjustment
 

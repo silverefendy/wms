@@ -46,9 +46,9 @@ Correct stock quantities when discrepancies are discovered outside of formal sto
    - If rejected, request returned with reason
    - If approved, adjustment proceeds
 
-7. **Create Stock Entry**
-   - System creates ERPNext Stock Entry
-   - Stock Entry adjusts Stock Ledger
+7. **Record the adjustment through ERPNext**
+   - System creates the appropriate standard ERPNext stock-affecting document/API transaction
+   - ERPNext updates the Stock Ledger through normal document processing
    - Accounting entries created
    - Adjustment marked as complete
 
@@ -89,7 +89,7 @@ Correct stock quantities when discrepancies are discovered outside of formal sto
 ## ERPNext Integration
 
 ### Documents Created
-- Stock Entry (ERPNext) - Stock Adjustment type
+- Stock Reconciliation or another appropriate ERPNext stock-affecting document
 
 ### Documents Referenced
 - Item (ERPNext)
@@ -97,7 +97,7 @@ Correct stock quantities when discrepancies are discovered outside of formal sto
 - WMS Location (Zone/Aisle/Rack/Shelf/Bin)
 
 ### Stock Ledger Impact
-- Stock Entry updates Stock Ledger
+- ERPNext updates the Stock Ledger through normal document processing
 - Stock increased or decreased
 - Accounting entries created for value adjustment
 

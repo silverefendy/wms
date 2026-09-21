@@ -10,40 +10,30 @@ WMS is a custom Frappe application built on ERPNext v16 that provides warehouse 
 
 WMS extends ERPNext with warehouse workflows, operational interfaces, and mobile capabilities without duplicating stock ledgers or accounting data.
 
-## Current Scope
+## Scope Status
 
-- Inventory management
-- Warehouse operations
-- Purchasing integration
-- Sales integration
-- POS integration
-- Barcode scanning
-- QR Code support
-- RFID architecture
-- Serial number tracking
-- Batch/lot tracking
-- UOM conversion
-- Item variants
-- Receiving workflows
-- Putaway workflows
-- Transfer workflows
-- Stock count workflows
-- Stock adjustment workflows
-- Returns processing
-- WMS reporting
-- Mobile architecture
-- Offline architecture (planned)
+### Architecture Scope
 
-## Planned Scope
+- Warehouse operational workflows layered on ERPNext
+- Warehouse location hierarchy and warehouse-specific UI
+- Mobile, exception, offline synchronization, and RFID integration boundaries
+- Integration with ERPNext master data and standard stock-affecting documents
 
-- Picking and packing workflows
-- Advanced manufacturing integration
-- Stock reservation
-- Reorder automation
-- RFID hardware integration
-- Offline synchronization
-- Advanced analytics
-- Multi-company/customer deployment
+### Planned
+
+- Receiving, putaway, transfer, picking, packing, stock count, and adjustment workflows
+- Barcode/QR workflows, mobile UI, offline synchronization, RFID integration, and reporting
+- Purchasing, sales, POS, manufacturing, reservation, and reorder integrations
+
+### Implemented
+
+- Frappe application scaffold and metadata
+- Foundation and architecture documentation
+
+### Not Yet Implemented
+
+- All operational WMS workflows and custom operational DocTypes
+- Mobile UI, offline synchronization, RFID integration, and business APIs
 
 ## Architecture
 
@@ -68,7 +58,7 @@ graph TD
     K --> L[Item]
     K --> M[Warehouse]
     K --> N[Stock Ledger]
-    K --> O[Stock Entry]
+    K --> O[Standard Stock-Affecting Documents]
     K --> P[Purchase]
     K --> Q[Sales]
     K --> R[POS]
@@ -79,10 +69,12 @@ graph TD
 
 - Frappe Framework v16
 - ERPNext v16
-- Python 3.10+
-- Node.js 18+
-- MariaDB 10.6+
-- Redis/Valkey
+- Python 3.14
+- Node.js 24
+- MariaDB 11.8
+- Redis/Valkey 6+
+
+Use the exact patch/minor versions and supported host packages from the current official Frappe v16 installation guidance.
 
 ## Installation
 
@@ -133,7 +125,7 @@ bench build --app wms
 
 ## License
 
-Status: Undecided. See [license.txt](wms/license.txt) for details.
+License status: Decision pending. Current repository classification is proprietary / all rights reserved unless a license is explicitly added. See [license.txt](wms/license.txt) for details.
 
 ## Repository
 

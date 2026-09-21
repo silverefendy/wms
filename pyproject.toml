@@ -1,0 +1,20 @@
+[project]
+name = "wms"
+authors = [{ name = "Efendy" }]
+description = "Inventory and Warehouse Management System built on Frappe Framework and ERPNext."
+readme = "README.md"
+requires-python = ">=3.14"
+dynamic = ["version"]
+dependencies = []
+license = { text = "Decision pending; proprietary / all rights reserved unless a license is explicitly added" }
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.bench.frappe-dependencies]
+frappe = ">=16.0.0,<17.0.0"
+erpnext = ">=16.0.0,<17.0.0"
+
+[project.urls]
+Repository = "https://github.com/silverefendy/wms.git"

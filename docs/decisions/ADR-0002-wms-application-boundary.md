@@ -83,7 +83,7 @@ WMS extends ERPNext with warehouse-specific workflows and interfaces while ERPNe
 - Customer and Supplier data
 
 ### Shared/Integrated
-- Stock Entry (created by WMS, owned by ERPNext)
+- Standard ERPNext stock-affecting documents (selected by business event, owned by ERPNext)
 - Warehouse (extended by WMS, owned by ERPNext)
 - Stock movements (triggered by WMS, recorded by ERPNext)
 
@@ -102,7 +102,7 @@ WMS extends ERPNext with warehouse-specific workflows and interfaces while ERPNe
 ## Implementation Notes
 
 ### Integration Points
-- WMS triggers ERPNext Stock Entry for stock movements
+- All stock-affecting WMS operations ultimately use the appropriate standard ERPNext stock-affecting document/API; WMS does not maintain or directly modify a competing stock ledger.
 - WMS reads ERPNext documents for workflow context
 - WMS extends ERPNext Warehouse with location hierarchy
 - WMS uses Frappe hooks for event integration

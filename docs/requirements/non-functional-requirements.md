@@ -121,7 +121,7 @@ Important transactions must identify:
 - Idempotent operations
 - Duplicate prevention
 - Sync status tracking
-- See [mobile/offline-sync.md](mobile/offline-sync.md) for details
+- See [Offline Synchronization Architecture](../mobile/offline-sync.md) for details
 
 ## Usability
 
@@ -165,4 +165,4 @@ Important transactions must identify:
 - Development environment
 - Staging environment
 - Production environment
-- See [deployment/](deployment/) for details
+- See [Deployment Documentation](../deployment/) for details

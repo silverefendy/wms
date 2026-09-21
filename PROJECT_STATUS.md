@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-**Planning / Foundation**
+**Foundation scaffold complete**
 
 ## Completed
 
@@ -15,11 +15,12 @@
 - Frappe v16 application scaffold created
 - Project documentation structure created
 
-## In Progress
+## Foundation Status
 
-- Application foundation
-- Project documentation completion
-- Data model planning
+- Business and architecture documentation complete
+- No operational WMS workflows implemented yet
+- No operational custom DocTypes implemented yet
+- Full Frappe/ERPNext installation validation remains to be performed in a real Frappe v16 Bench environment
 
 ## Not Implemented Yet
 
@@ -45,13 +46,12 @@
 
 - **Designed**: Conceptual design documented, not implemented
 - **Planned**: Intended for future phase, not yet designed
-- **Implemented**: Code written, not tested
+- **Implemented**: Code written, not necessarily tested in a Bench
 - **Tested**: Code tested, not production-ready
 - **Production Ready**: Deployed and operational
 
 ## Next Steps
 
-1. Complete Phase 0 foundation documentation
-2. Set up development environment
-3. Set up staging environment
-4. Begin Phase 1: Master Data Integration
+1. Set up a disposable Frappe v16 + ERPNext v16 development Bench
+2. Validate installation, migration, and build in that Bench
+3. Begin Phase 1: Master Data Integration

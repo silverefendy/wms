@@ -36,8 +36,8 @@ Process point-of-sale transactions with warehouse integration for stock updates.
 5. **Complete Transaction**
    - Cashier completes transaction
    - System submits POS Invoice
-   - System creates Stock Entry
-   - Stock Entry updates Stock Ledger
+   - ERPNext processes the POS Invoice through its standard stock flow
+   - ERPNext updates the Stock Ledger through normal document processing
    - System prints receipt
 
 ## Exceptions
@@ -83,7 +83,7 @@ Process point-of-sale transactions with warehouse integration for stock updates.
 
 ### Documents Created
 - POS Invoice (ERPNext)
-- Stock Entry (ERPNext) - via POS Invoice
+- POS Invoice (ERPNext) - standard POS stock flow
 
 ### Documents Referenced
 - Item (ERPNext)
@@ -92,8 +92,7 @@ Process point-of-sale transactions with warehouse integration for stock updates.
 - Payment Method (ERPNext)
 
 ### Stock Ledger Impact
-- POS Invoice creates Stock Entry
-- Stock Entry updates Stock Ledger
+- POS Invoice updates stock through normal ERPNext processing
 - Stock decreased from warehouse
 - Accounting entries created
 

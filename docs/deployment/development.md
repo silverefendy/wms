@@ -20,12 +20,14 @@ WMS (development version)
 ## Prerequisites
 
 ### System Requirements
-- Operating System: Ubuntu 20.04+ or Windows with WSL2
-- Python 3.10+
-- Node.js 18+
-- MariaDB 10.6+
-- Redis/Valkey
+- Operating System: Debian 13+, Ubuntu 24.04+, or Windows with WSL2
+- Python 3.14
+- Node.js 24
+- MariaDB 11.8
+- Redis/Valkey 6+
 - Git
+
+Use the exact patch/minor versions and supported host packages from the current official Frappe v16 installation guidance.
 
 ### Software Installation
 

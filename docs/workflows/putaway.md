@@ -35,7 +35,7 @@ Place received items into their designated storage locations within the warehous
 5. **Complete Putaway**
    - Operator confirms putaway
    - System creates ERPNext Stock Entry
-   - Stock Entry updates Stock Ledger
+   - ERPNext updates the Stock Ledger through the appropriate standard document/API
    - Item marked as putaway
 
 ## Exceptions
@@ -75,7 +75,7 @@ Place received items into their designated storage locations within the warehous
 ## ERPNext Integration
 
 ### Documents Created
-- Stock Entry (ERPNext)
+- Appropriate ERPNext stock-affecting document/API
 
 ### Documents Referenced
 - Purchase Receipt (ERPNext)
@@ -84,7 +84,7 @@ Place received items into their designated storage locations within the warehous
 - WMS Location (Zone/Aisle/Rack/Shelf/Bin)
 
 ### Stock Ledger Impact
-- Stock Entry updates Stock Ledger
+- ERPNext updates the Stock Ledger through normal document processing
 - Stock recorded in specific warehouse
 - Location recorded in custom fields
 

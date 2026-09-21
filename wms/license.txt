@@ -1,5 +1,4 @@
-# License: Proprietary
-# Status: Undecided
-# Reason: License has not been formally decided yet.
-# Current recommendation: Use MIT or GPL v3 for open-source distribution.
-# Decision required before production deployment.
+License status: Decision pending
+Current repository classification: Proprietary / All rights reserved unless a license is explicitly added.
+
+No open-source license is granted by this repository at this time.
