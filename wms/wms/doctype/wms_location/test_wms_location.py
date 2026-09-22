@@ -1,5 +1,5 @@
 import frappe
-from frappe.tests.utils import IntegrationTestCase
+from frappe.tests import IntegrationTestCase
 
 
 class TestWMSLocation(IntegrationTestCase):
