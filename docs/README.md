@@ -15,6 +15,7 @@ This directory contains the complete documentation for the WMS project.
 - [Data Model](architecture/data-model.md) - Conceptual data model
 - [Permissions](architecture/permissions.md) - Access control design
 - [Integration](architecture/integration.md) - ERPNext integration points
+- [WMS Location Model](architecture/wms-location-model.md) - Physical location hierarchy
 
 ### [Workflows](workflows/)
 - [Receiving](workflows/receiving.md)
@@ -41,6 +42,7 @@ This directory contains the complete documentation for the WMS project.
 - [ADR-0002](decisions/ADR-0002-wms-application-boundary.md) - WMS application boundary
 - [ADR-0003](decisions/ADR-0003-erpnext-item-and-variant-master.md) - ERPNext item and variant master
 - [ADR-0004](decisions/ADR-0004-offline-first-design.md) - Offline-first design
+- [ADR-0005](decisions/ADR-0005-wms-physical-location-model.md) - WMS physical location model
 
 ### [Testing](testing/)
 - [Foundation Validation](testing/foundation-validation.md) - Disposable Frappe/ERPNext installation gate
