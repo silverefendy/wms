@@ -1,8 +1,9 @@
+import unittest
+
 import frappe
-from frappe.tests import IntegrationTestCase
 
 
-class TestWMSLocation(IntegrationTestCase):
+class TestWMSLocation(unittest.TestCase):
 	"""Validation tests for the physical WMS location tree."""
 
 	def setUp(self):
