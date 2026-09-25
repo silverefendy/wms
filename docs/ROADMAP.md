@@ -51,13 +51,13 @@ See [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) for
 the accepted design (Big Bag as serialized ERPNext Item; Weighbridge Ticket as
 a manual-entry reference document).
 
-- [ ] Big Bag Item + Serial No setup (RFID + QR fields)
+- [x] Big Bag Item + Serial No setup (RFID + QR fields)
 - [ ] Empty Bag → Filled Bag workflow (Stock Entry - Manufacture)
 - [ ] Filled Bag → Empty Bag reverse workflow (reuse cycle)
 - [ ] Big Bag damage / write-off exception flow
 - [ ] Big Bag sold-with-shipment flow (own line item on Delivery Note/Sales Invoice)
 - [ ] Filled Bag → Container loading workflow (Material Transfer / Delivery Note)
-- [ ] WMS Weighbridge Ticket DocType (manual entry; bag/RFID child table; link to Delivery Note)
+- [x] WMS Weighbridge Ticket DocType (manual entry; bag/RFID child table; link to Delivery Note)
 - [ ] Weight/quantity mismatch exception + approval flow
 - [ ] Periodic RFID-based location verification report (WMS Location vs. last scan)
 - [ ] (Future, deferred) Integration with existing weighbridge application/hardware
