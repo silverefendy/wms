@@ -2,6 +2,13 @@
 
 This directory contains the complete documentation for the WMS project.
 
+## Project
+
+- [Project Status](PROJECT_STATUS.md) - Current phase and completion status
+- [Roadmap](ROADMAP.md) - Implementation phases
+- [Changelog](CHANGELOG.md) - Notable changes
+- [Security Policy](SECURITY.md) - Vulnerability reporting and security guidelines
+
 ## Documentation Structure
 
 ### [Requirements](requirements/)
@@ -43,6 +50,8 @@ This directory contains the complete documentation for the WMS project.
 - [ADR-0003](decisions/ADR-0003-erpnext-item-and-variant-master.md) - ERPNext item and variant master
 - [ADR-0004](decisions/ADR-0004-offline-first-design.md) - Offline-first design
 - [ADR-0005](decisions/ADR-0005-wms-physical-location-model.md) - WMS physical location model
+- [ADR-0006](decisions/ADR-0006-physical-stock-location-strategy.md) - Physical stock location strategy (Inventory Dimension), including architecture detail and runtime validation status
+- [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) - Wood pellet bagging, big bag lifecycle, and weighbridge boundary
 
 ### [Testing](testing/)
 - [Foundation Validation](testing/foundation-validation.md) - Disposable Frappe/ERPNext installation gate

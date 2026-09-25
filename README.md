@@ -22,6 +22,7 @@ WMS extends ERPNext with warehouse workflows, operational interfaces, and mobile
 ### Planned
 
 - Receiving, putaway, transfer, picking, packing, stock count, and adjustment workflows
+- Wood pellet bagging (big bag lifecycle) and weighbridge ticketing
 - Barcode/QR workflows, mobile UI, offline synchronization, RFID integration, and reporting
 - Purchasing, sales, POS, manufacturing, reservation, and reorder integrations
 
@@ -94,8 +95,8 @@ bench build --app wms
 ## Development Status
 
 - **Current Phase**: Foundation / Bootstrap
-- See [PROJECT_STATUS.md](PROJECT_STATUS.md) for detailed status
-- See [ROADMAP.md](ROADMAP.md) for implementation phases
+- See [Project Status](docs/PROJECT_STATUS.md) for detailed status
+- See [Roadmap](docs/ROADMAP.md) for implementation phases
 - See [docs/](docs/) for complete documentation
 
 ## Development Principles
@@ -110,8 +111,10 @@ bench build --app wms
 
 ## Documentation
 
-- [Project Status](PROJECT_STATUS.md)
-- [Roadmap](ROADMAP.md)
+- [Project Status](docs/PROJECT_STATUS.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Security Policy](docs/SECURITY.md)
 - [Business Requirements](docs/requirements/business-requirements.md)
 - [Functional Requirements](docs/requirements/functional-requirements.md)
 - [Non-Functional Requirements](docs/requirements/non-functional-requirements.md)
