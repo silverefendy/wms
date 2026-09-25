@@ -43,6 +43,25 @@
 - [ ] Stock Count workflow
 - [ ] Adjustment workflow
 
+## Phase 2.5 — Wood Pellet Bagging & Weighbridge
+
+**Status**: Not Started
+
+See [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) for
+the accepted design (Big Bag as serialized ERPNext Item; Weighbridge Ticket as
+a manual-entry reference document).
+
+- [ ] Big Bag Item + Serial No setup (RFID + QR fields)
+- [ ] Empty Bag → Filled Bag workflow (Stock Entry - Manufacture)
+- [ ] Filled Bag → Empty Bag reverse workflow (reuse cycle)
+- [ ] Big Bag damage / write-off exception flow
+- [ ] Big Bag sold-with-shipment flow (own line item on Delivery Note/Sales Invoice)
+- [ ] Filled Bag → Container loading workflow (Material Transfer / Delivery Note)
+- [ ] WMS Weighbridge Ticket DocType (manual entry; bag/RFID child table; link to Delivery Note)
+- [ ] Weight/quantity mismatch exception + approval flow
+- [ ] Periodic RFID-based location verification report (WMS Location vs. last scan)
+- [ ] (Future, deferred) Integration with existing weighbridge application/hardware
+
 ## Phase 3 — Purchasing Integration
 
 **Status**: Not Started
@@ -89,6 +108,7 @@
 - [ ] Mobile stock count
 - [ ] Mobile picking
 - [ ] Mobile packing
+- [ ] Mobile RFID scanning (big bag verification)
 
 ## Phase 7 — Offline
 
