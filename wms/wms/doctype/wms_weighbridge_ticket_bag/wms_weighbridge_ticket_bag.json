@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2026-09-26 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "serial_no",
+  "item_code",
+  "rfid_tag",
+  "qr_code",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Serial No",
+   "options": "Serial No",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "serial_no.item_code",
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serial_no.wms_rfid_tag",
+   "fieldname": "rfid_tag",
+   "fieldtype": "Data",
+   "label": "RFID Tag",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serial_no.wms_qr_code",
+   "fieldname": "qr_code",
+   "fieldtype": "Data",
+   "label": "QR Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "istable": 1,
+ "module": "WMS",
+ "name": "WMS Weighbridge Ticket Bag",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

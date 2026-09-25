@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:ticket_number",
+ "creation": "2026-09-26 00:00:00.000000",
+ "default_view": "List",
+ "description": "Weighbridge ticket for verifying outbound shipments against ERPNext documents.",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "field_order": [
+  "ticket_information",
+  "ticket_number",
+  "ticket_datetime_in",
+  "ticket_datetime_out",
+  "vehicle_or_container_no",
+  "operator",
+  "weight_information",
+  "gross_weight",
+  "tare_weight",
+  "net_weight",
+  "weight_uom",
+  "weight_tolerance_percent",
+  "status",
+  "reference_information",
+  "reference_doctype",
+  "reference_name",
+  "bags",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "ticket_information",
+   "fieldtype": "Section Break",
+   "label": "Ticket Information"
+  },
+  {
+   "fieldname": "ticket_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ticket Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "ticket_datetime_in",
+   "fieldtype": "Datetime",
+   "label": "Date/Time In",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ticket_datetime_out",
+   "fieldtype": "Datetime",
+   "label": "Date/Time Out"
+  },
+  {
+   "fieldname": "vehicle_or_container_no",
+   "fieldtype": "Data",
+   "label": "Vehicle or Container No"
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Link",
+   "label": "Operator",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "weight_information",
+   "fieldtype": "Section Break",
+   "label": "Weight Information"
+  },
+  {
+   "fieldname": "gross_weight",
+   "fieldtype": "Float",
+   "label": "Gross Weight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tare_weight",
+   "fieldtype": "Float",
+   "label": "Tare Weight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "net_weight",
+   "fieldtype": "Float",
+   "label": "Net Weight",
+   "read_only": 1
+  },
+  {
+   "default": "Kg",
+   "fieldname": "weight_uom",
+   "fieldtype": "Link",
+   "label": "Weight UOM",
+   "options": "UOM"
+  },
+  {
+   "default": "2",
+   "fieldname": "weight_tolerance_percent",
+   "fieldtype": "Float",
+   "label": "Weight Tolerance Percent"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nVerified\nMismatch\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_information",
+   "fieldtype": "Section Break",
+   "label": "Reference Information"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Select",
+   "label": "Reference DocType",
+   "options": "Delivery Note\nStock Entry\nPurchase Receipt"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Name",
+   "options": "reference_doctype"
+  },
+  {
+   "fieldname": "bags",
+   "fieldtype": "Table",
+   "label": "Bags",
+   "options": "WMS Weighbridge Ticket Bag",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "icon": "octicon octicon-scale",
+ "links": [],
+ "module": "WMS",
+ "name": "WMS Weighbridge Ticket",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
