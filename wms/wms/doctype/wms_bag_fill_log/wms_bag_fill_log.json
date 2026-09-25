@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:fill_log_number",
+ "creation": "2026-09-26 00:00:00.000000",
+ "default_view": "List",
+ "description": "Auditable wrapper around Stock Entry (Manufacture) for filling Big Bags with bulk pellet.",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "field_order": [
+  "fill_log_information",
+  "fill_log_number",
+  "fill_datetime",
+  "operator",
+  "source_information",
+  "source_item",
+  "source_warehouse",
+  "qty_consumed",
+  "uom",
+  "bag_information",
+  "bag_serial_no",
+  "stock_entry",
+  "status",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "fill_log_information",
+   "fieldtype": "Section Break",
+   "label": "Fill Log Information"
+  },
+  {
+   "fieldname": "fill_log_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fill Log Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "fill_datetime",
+   "fieldtype": "Datetime",
+   "label": "Fill Date/Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Link",
+   "label": "Operator",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_information",
+   "fieldtype": "Section Break",
+   "label": "Source Information"
+  },
+  {
+   "fieldname": "source_item",
+   "fieldtype": "Link",
+   "label": "Source Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_warehouse",
+   "fieldtype": "Link",
+   "label": "Source Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_consumed",
+   "fieldtype": "Float",
+   "label": "Qty Consumed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "bag_information",
+   "fieldtype": "Section Break",
+   "label": "Bag Information"
+  },
+  {
+   "fieldname": "bag_serial_no",
+   "fieldtype": "Link",
+   "label": "Bag Serial No",
+   "options": "Serial No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nCompleted\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "icon": "octicon octicon-package",
+ "is_submittable": 1,
+ "links": [],
+ "module": "WMS",
+ "name": "WMS Bag Fill Log",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
