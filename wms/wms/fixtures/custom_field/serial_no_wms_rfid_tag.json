@@ -1,0 +1,11 @@
+{
+ "dt": "Serial No",
+ "fieldname": "wms_rfid_tag",
+ "fieldtype": "Data",
+ "label": "RFID Tag",
+ "unique": 1,
+ "insert_after": "item_code",
+ "module": "WMS",
+ "no_copy": 0,
+ "reqd": 0
+}
