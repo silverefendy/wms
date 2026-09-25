@@ -48,6 +48,7 @@ class TestWMSWeighbridgeTicket(unittest.TestCase):
 				"email": "weighbridge_operator@test.com",
 				"first_name": "Weighbridge",
 				"last_name": "Operator",
+				"send_welcome_email": 0,
 			}
 		).insert(ignore_permissions=True).name
 

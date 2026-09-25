@@ -1,8 +1,9 @@
 import frappe
 from frappe import _
+from frappe.model.document import Document
 
 
-class WMSWeighbridgeTicket:
+class WMSWeighbridgeTicket(Document):
 	def validate(self):
 		self.validate_net_weight()
 		self.validate_bags()

@@ -1,0 +1,42 @@
+[
+ {
+  "doctype": "Custom Field",
+  "name": "Item-is_wms_reusable_container",
+  "dt": "Item",
+  "fieldname": "is_wms_reusable_container",
+  "fieldtype": "Check",
+  "label": "Is WMS Reusable Container",
+  "default": "0",
+  "insert_after": "item_group",
+  "module": "WMS",
+  "no_copy": 0,
+  "reqd": 0,
+  "unique": 0
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Serial No-wms_rfid_tag",
+  "dt": "Serial No",
+  "fieldname": "wms_rfid_tag",
+  "fieldtype": "Data",
+  "label": "RFID Tag",
+  "unique": 1,
+  "insert_after": "item_code",
+  "module": "WMS",
+  "no_copy": 0,
+  "reqd": 0
+ },
+ {
+  "doctype": "Custom Field",
+  "name": "Serial No-wms_qr_code",
+  "dt": "Serial No",
+  "fieldname": "wms_qr_code",
+  "fieldtype": "Data",
+  "label": "QR Code",
+  "unique": 1,
+  "insert_after": "wms_rfid_tag",
+  "module": "WMS",
+  "no_copy": 0,
+  "reqd": 0
+ }
+]
