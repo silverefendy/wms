@@ -7,3 +7,6 @@ app_icon = "octicon octicon-database"
 app_version = "0.0.1"
 app_homepage = "https://github.com/silverefendy/wms"
 app_license = "Proprietary"
+
+# Custom Field Fixtures
+fixtures = "custom_field"

@@ -1,0 +1,11 @@
+{
+ "dt": "Serial No",
+ "fieldname": "wms_qr_code",
+ "fieldtype": "Data",
+ "label": "QR Code",
+ "unique": 1,
+ "insert_after": "wms_rfid_tag",
+ "module": "WMS",
+ "no_copy": 0,
+ "reqd": 0
+}
