@@ -1,146 +1,43 @@
 # Adjustment Workflow
 
-## Purpose
-Correct stock quantities when discrepancies are discovered outside of formal stock count process.
+**Actors**: Warehouse Operator, Warehouse Manager, Accountant
+**Inputs**: Adjustment request, item(s), reason, adjustment quantity
 
-## Actors
-- Warehouse Operator
-- Warehouse Manager
-- Accountant
+## Flow
 
-## Inputs
-- Adjustment request
-- Item(s) to adjust
-- Reason for adjustment
-- Adjustment quantity
+1. Operator/manager selects item(s), enters the adjustment quantity (+/-) and location.
+2. Operator selects a reason from a predefined list and provides a detailed explanation (remarks always required).
+3. Operator attaches supporting documentation (required for significant adjustments).
+4. Operator submits for approval; system routes to the manager.
+5. Manager reviews, verifies documentation, investigates if needed, and approves or rejects.
+6. If approved, the system records it through the appropriate ERPNext stock-affecting document/API, updating the Stock Ledger and accounting entries; the adjustment is marked complete.
 
-## Normal Flow
+## Exceptions & Approval
 
-1. **Create Adjustment Request**
-   - Operator or manager initiates adjustment
-   - Operator selects item(s)
-   - Operator enters adjustment quantity (+ or -)
-   - Operator selects location
+| Exception | Handling | Requires Approval |
+|---|---|---|
+| Insufficient justification | Rejected; operator must add documentation | — |
+| Above threshold | Requires higher-level / accountant review | Yes |
+| Invalid location | Alert + correction required | — |
+| Item not found at location | Alert; may indicate a data error to investigate | — |
 
-2. **Specify Reason**
-   - Operator selects reason from predefined list
-   - Operator provides detailed explanation
-   - **Required** remarks for all adjustments
-
-3. **Attach Documentation**
-   - Operator attaches supporting documents
-   - Photos, reports, or other evidence
-   - Documentation required for significant adjustments
-
-4. **Submit for Approval**
-   - Operator submits adjustment request
-   - System routes to manager for approval
-
-5. **Manager Review**
-   - Manager reviews adjustment request
-   - Manager verifies documentation
-   - Manager investigates if needed
-
-6. **Approval Decision**
-   - Manager approves or rejects
-   - If rejected, request returned with reason
-   - If approved, adjustment proceeds
-
-7. **Record the adjustment through ERPNext**
-   - System creates the appropriate standard ERPNext stock-affecting document/API transaction
-   - ERPNext updates the Stock Ledger through normal document processing
-   - Accounting entries created
-   - Adjustment marked as complete
-
-## Exceptions
-
-### Insufficient Justification
-- Adjustment lacks proper documentation
-- Manager rejects request
-- Operator must provide additional documentation
-
-### Adjustment Above Threshold
-- Adjustment quantity exceeds threshold
-- Requires higher-level approval
-- May require accountant review
-
-### Invalid Location
-- Operator selects invalid location
-- System alerts and requires correction
-
-### Item Not Found
-- Item does not exist in location
-- System alerts operator
-- May indicate data error requiring investigation
-
-## Approval
-
-### Approval Triggers
-- All adjustments require approval
-- Threshold-based approval levels
-- Accountant approval for value adjustments above threshold
-
-### Approval Process
-- Manager reviews adjustment
-- Manager approves or rejects
-- Accountant may review for financial impact
-- System records approval decision
+**All adjustments require approval** — this workflow has no unapproved path.
 
 ## ERPNext Integration
 
-### Documents Created
-- Stock Reconciliation or another appropriate ERPNext stock-affecting document
+- **Created**: Stock Reconciliation or another appropriate stock-affecting document.
+- **Referenced**: Item, Warehouse, WMS Location (Zone/Aisle/Rack/Shelf/Bin).
+- Stock increases/decreases with corresponding accounting entries for the value adjustment.
 
-### Documents Referenced
-- Item (ERPNext)
-- Warehouse (ERPNext)
-- WMS Location (Zone/Aisle/Rack/Shelf/Bin)
+## Remarks & Attachments
 
-### Stock Ledger Impact
-- ERPNext updates the Stock Ledger through normal document processing
-- Stock increased or decreased
-- Accounting entries created for value adjustment
+- **Required for all adjustments**: detailed reason, root cause if known, preventive measures if applicable.
+- **Required** for significant adjustments: investigation reports, photos, supporting documentation, evidence of discrepancy.
 
-## Remarks
+## Audit Fields
 
-### **Required for All Adjustments**
-- Detailed explanation of reason
-- Root cause if known
-- Preventive measures if applicable
+Item code & description, adjustment quantity (+/-), location, reason, operator, approving manager, reviewing accountant (if applicable), timestamp, stock document reference, supporting documentation, remarks.
 
-## Attachments
+## Future Considerations (Mobile & Offline)
 
-- **Required** for significant adjustments:
-  - Investigation reports
-  - Photos
-  - Supporting documentation
-  - Evidence of discrepancy
-
-## Audit Requirements
-
-Record for each adjustment:
-- Item code and description
-- Adjustment quantity (+ or -)
-- Location
-- Reason for adjustment
-- Operator who requested
-- Manager who approved
-- Accountant who reviewed (if applicable)
-- Timestamp
-- Stock Entry reference
-- Supporting documentation
-- Remarks
-
-## Future Mobile Considerations
-
-- Mobile adjustment request interface
-- Photo capture via mobile camera
-- Offline adjustment queue
-- Sync when connectivity returns
-
-## Future Offline Considerations
-
-- Queue adjustment requests offline
-- Sync item/location data for offline reference
-- Conflict detection if stock already adjusted
-- Sync audit trail when online
+Mobile adjustment requests with photo capture. Offline: queue adjustment requests, sync item/location reference data, detect conflicts if stock was already adjusted, sync audit trail once online.

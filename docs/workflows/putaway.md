@@ -1,135 +1,41 @@
 # Putaway Workflow
 
-## Purpose
-Place received items into their designated storage locations within the warehouse.
+**Actors**: Warehouse Operator, Warehouse Manager
+**Inputs**: Purchase Receipt (ERPNext), completed Receiving workflow, storage location assignments
 
-## Actors
-- Warehouse Operator
-- Warehouse Manager
+## Flow
 
-## Inputs
-- Purchase Receipt (ERPNext)
-- Receiving workflow completion
-- Storage location assignments
+1. System lists items awaiting putaway; operator selects an item/batch.
+2. System suggests a storage location (Warehouse → Zone → Aisle → Rack → Shelf → Bin); operator confirms or changes it.
+3. Operator scans the location barcode; system validates it exists and is available.
+4. Operator confirms the quantity against the received quantity.
+5. Operator confirms putaway; system creates the appropriate ERPNext stock-affecting document, which updates the Stock Ledger.
 
-## Normal Flow
+## Exceptions & Approval
 
-1. **Initiate Putaway**
-   - System lists items awaiting putaway
-   - Operator selects item or batch to putaway
-
-2. **Determine Location**
-   - System suggests storage location based on rules
-   - Operator confirms or changes location
-   - Location hierarchy: Warehouse ? Zone ? Aisle ? Rack ? Shelf ? Bin
-
-3. **Scan Location**
-   - Operator scans location barcode
-   - System validates location exists
-   - System confirms location is available
-
-4. **Confirm Quantity**
-   - Operator confirms quantity to putaway
-   - System validates against received quantity
-
-5. **Complete Putaway**
-   - Operator confirms putaway
-   - System creates ERPNext Stock Entry
-   - ERPNext updates the Stock Ledger through the appropriate standard document/API
-   - Item marked as putaway
-
-## Exceptions
-
-### Location Full
-- System alerts location is full
-- Operator selects alternative location
-- May require manager approval for non-standard location
-
-### Invalid Location
-- Operator scans invalid location
-- System alerts and requires rescan
-- Location must exist in hierarchy
-
-### Quantity Mismatch
-- Putaway quantity does not match received quantity
-- System alerts operator
-- May require manager approval
-
-### Damaged During Putaway
-- Operator records damage
-- Exception document created
-- Manager approval required
-
-## Approval
-
-### Approval Triggers
-- Non-standard location assignment
-- Quantity mismatch
-- Damage during putaway
-
-### Approval Process
-- Manager reviews exception
-- Manager approves or rejects
-- System records approval decision
+| Exception | Handling | Requires Approval |
+|---|---|---|
+| Location full | Operator selects an alternative location | Non-standard location |
+| Invalid location | Alert + rescan required | — |
+| Quantity mismatch | Alert operator | Yes |
+| Damaged during putaway | Record damage, exception document | Yes |
 
 ## ERPNext Integration
 
-### Documents Created
-- Appropriate ERPNext stock-affecting document/API
+- **Created**: the appropriate ERPNext stock-affecting document/API.
+- **Referenced**: Purchase Receipt, Item, Warehouse, WMS Location (Zone/Aisle/Rack/Shelf/Bin).
+- Stock recorded against the warehouse; location recorded in custom fields (see [ADR-0006](../decisions/ADR-0006-physical-stock-location-strategy.md)).
 
-### Documents Referenced
-- Purchase Receipt (ERPNext)
-- Item (ERPNext)
-- Warehouse (ERPNext)
-- WMS Location (Zone/Aisle/Rack/Shelf/Bin)
+## Remarks & Attachments
 
-### Stock Ledger Impact
-- ERPNext updates the Stock Ledger through normal document processing
-- Stock recorded in specific warehouse
-- Location recorded in custom fields
+- Optional remarks for normal putaway.
+- **Required** for non-standard location, quantity mismatch, damage, or any process deviation.
+- Attachments: photos of damage, location verification documents.
 
-## Remarks
+## Audit Fields
 
-### Normal Putaway
-- Optional remarks field
+Item code & description, quantity, source (Purchase Receipt), destination location (full hierarchy), operator, timestamp, stock document reference, exceptions, approval, remarks.
 
-### Exception Putaway
-- **Required** remarks for:
-  - Non-standard location
-  - Quantity mismatch
-  - Damage during putaway
-  - Any deviation from standard process
+## Future Considerations (Mobile & Offline)
 
-## Attachments
-
-- Photos of damage (if applicable)
-- Location verification documents
-
-## Audit Requirements
-
-Record for each putaway:
-- Item code and description
-- Quantity putaway
-- Source (Purchase Receipt)
-- Destination location (full hierarchy)
-- Operator who performed putaway
-- Timestamp
-- Stock Entry reference
-- Any exceptions
-- Approval if required
-- Remarks
-
-## Future Mobile Considerations
-
-- Mobile scanning interface
-- Location barcode scanning
-- Suggested location display
-- Offline putaway queue
-- Sync when connectivity returns
-
-## Future Offline Considerations
-
-- Queue putaway transactions offline
-- Sync location data for offline reference
-- Conflict detection if multiple users putaway same item
-- Sync audit trail when online
+Mobile scanning for locations and suggested-location display. Offline: queue putaway transactions, sync location reference data, detect conflicts when multiple users putaway the same item, sync audit trail once online.

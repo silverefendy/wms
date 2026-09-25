@@ -1,133 +1,42 @@
 # Receiving Workflow
 
-## Purpose
-Process inbound goods from suppliers and record their receipt into the warehouse.
+**Actors**: Warehouse Operator, Warehouse Manager, Purchasing Staff
+**Inputs**: Purchase Order (ERPNext), supplier delivery note, physical goods, barcodes/labels
 
-## Actors
-- Warehouse Operator
-- Warehouse Manager
-- Purchasing Staff
+## Flow
 
-## Inputs
-- Purchase Order (ERPNext)
-- Supplier delivery note
-- Physical goods
-- Barcodes/labels
+1. Operator selects a Purchase Order awaiting receiving.
+2. Operator scans each item barcode; system verifies against the PO and shows expected quantity.
+3. Operator confirms received quantity; system highlights over/under discrepancies.
+4. Operator records exceptions (damage, shortage) with photos if required.
+5. Operator confirms receipt; system creates ERPNext **Purchase Receipt** and triggers the Putaway workflow.
 
-## Normal Flow
+## Exceptions & Approval
 
-1. **Receive Purchase Order**
-   - System lists expected Purchase Orders
-   - Operator selects Purchase Order for receiving
+| Exception | Handling | Requires Approval |
+|---|---|---|
+| Damaged goods | Record damage details + photos, exception document | Above threshold |
+| Short receipt | Record shortage, flag for follow-up | Above threshold |
+| Over receipt | Record excess, flag for follow-up | Always |
+| Unknown item | Manual entry | Always |
 
-2. **Scan Items**
-   - Operator scans item barcode
-   - System verifies item against Purchase Order
-   - System displays expected quantity
-
-3. **Verify Quantity**
-   - Operator confirms received quantity
-   - System highlights discrepancies (over/under)
-
-4. **Record Exceptions**
-   - If damaged goods, operator records damage
-   - If missing items, operator records shortage
-   - Operator attaches photos if required
-
-5. **Complete Receiving**
-   - Operator confirms receipt
-   - System creates ERPNext Purchase Receipt
-   - System triggers Putaway workflow
-
-## Exceptions
-
-### Damaged Goods
-- Operator records damage details
-- Photos attached
-- Exception document created
-- Manager approval may be required
-
-### Short Receipt
-- Operator records shortage
-- System flags for follow-up
-- May require manager approval
-
-### Over Receipt
-- Operator records excess
-- System flags for follow-up
-- May require manager approval
-
-### Unknown Item
-- Operator cannot scan item
-- Manual entry with manager approval
-- Exception document created
-
-## Approval
-
-### Approval Triggers
-- Damaged goods above threshold
-- Short receipt above threshold
-- Over receipt
-- Unknown items
-
-### Approval Process
-- Manager reviews exception
-- Manager approves or rejects
-- System records approval decision
+Approval process: Manager reviews the exception, approves/rejects, decision is recorded.
 
 ## ERPNext Integration
 
-### Documents Created
-- Purchase Receipt (ERPNext)
-- Appropriate ERPNext stock-affecting document - via Putaway workflow
+- **Created**: Purchase Receipt; the appropriate stock-affecting document is created later via Putaway.
+- **Referenced**: Purchase Order, Item, Warehouse.
 
-### Documents Referenced
-- Purchase Order (ERPNext)
-- Item (ERPNext)
-- Warehouse (ERPNext)
+## Remarks & Attachments
 
-## Remarks
+- Optional remarks for normal receiving.
+- **Required** remarks for any deviation from the Purchase Order (damage, short/over receipt).
+- Attachments: photos of damaged goods, supplier delivery note, quality check documents.
 
-### Normal Receiving
-- Optional remarks field
+## Audit Fields
 
-### Exception Receiving
-- **Required** remarks for:
-  - Damaged goods
-  - Short receipt
-  - Over receipt
-  - Any deviation from Purchase Order
+Item code & description, quantity received, PO reference, Purchase Receipt reference, operator, timestamp, receiving-area location, exceptions, approval, remarks.
 
-## Attachments
+## Future Considerations (Mobile & Offline)
 
-- Photos of damaged goods
-- Supplier delivery note
-- Quality check documents
-
-## Audit Requirements
-
-Record for each item received:
-- Item code and description
-- Quantity received
-- Purchase Order reference
-- Purchase Receipt reference
-- Operator who received
-- Timestamp
-- Location (receiving area)
-- Any exceptions
-- Approval if required
-- Remarks
-
-## Future Mobile Considerations
-
-- Mobile scanning interface
-- Photo capture via mobile camera
-- Offline receiving queue
-- Sync when connectivity returns
-
-## Future Offline Considerations
-
-- Queue receiving transactions offline
-- Sync Purchase Order data for offline reference
-- Conflict detection if multiple users receive same order
-- Sync audit trail when online
+Mobile scanning interface with camera-based photo capture. Offline: queue receiving transactions and PO reference data locally; detect conflicts if multiple users receive the same order; sync audit trail once online.

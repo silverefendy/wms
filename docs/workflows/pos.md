@@ -1,148 +1,43 @@
 # POS Workflow
 
-## Purpose
-Process point-of-sale transactions with warehouse integration for stock updates.
+**Actors**: Cashier, Store Manager
+**Inputs**: Customer, items to purchase, payment method
 
-## Actors
-- Cashier
-- Store Manager
+## Flow
 
-## Inputs
-- Customer
-- Items to purchase
-- Payment method
+1. Cashier starts a transaction; system creates a new **POS Invoice**.
+2. Cashier scans each item; system displays price and checks stock availability.
+3. Item is added to the cart; system updates the total and validates stock.
+4. Cashier processes payment and the system confirms it.
+5. Cashier completes the transaction; system submits the POS Invoice, which ERPNext processes through its standard POS stock flow, updating the Stock Ledger through normal document processing; receipt is printed.
 
-## Normal Flow
+## Exceptions & Approval
 
-1. **Start Transaction**
-   - Cashier initiates POS transaction
-   - System creates new POS Invoice
+| Exception | Handling | Requires Approval |
+|---|---|---|
+| Out of stock | Alert cashier; item cannot proceed, may be removed | — |
+| Invalid barcode | Alert; manual entry option | Manual entry requires approval |
+| Payment failure | Alert; retry or use an alternative method | — |
+| Price discrepancy (scanned vs. marked) | Alert cashier | Yes, for override |
 
-2. **Scan Items**
-   - Cashier scans item barcode
-   - System displays item and price
-   - System checks stock availability
-
-3. **Add to Cart**
-   - Item added to transaction
-   - System updates total
-   - System validates stock
-
-4. **Process Payment**
-   - Cashier selects payment method
-   - Cashier processes payment
-   - System confirms payment
-
-5. **Complete Transaction**
-   - Cashier completes transaction
-   - System submits POS Invoice
-   - ERPNext processes the POS Invoice through its standard stock flow
-   - ERPNext updates the Stock Ledger through normal document processing
-   - System prints receipt
-
-## Exceptions
-
-### Out of Stock
-- Item has insufficient stock
-- System alerts cashier
-- Transaction cannot proceed for that item
-- Cashier may remove item from transaction
-
-### Invalid Barcode
-- Barcode not recognized
-- System alerts cashier
-- Cashier may enter item manually
-- Manual entry may require manager approval
-
-### Payment Failure
-- Payment processing fails
-- System alerts cashier
-- Cashier retries payment
-- May require alternative payment method
-
-### Price Discrepancy
-- Scanned price differs from marked price
-- System alerts cashier
-- Manager approval required for price override
-- Discount approval workflow
-
-## Approval
-
-### Approval Triggers
-- Manual item entry
-- Price overrides
-- Discounts above threshold
-- Returns
-
-### Approval Process
-- Manager reviews request
-- Manager approves or rejects
-- System records approval decision
+Discounts above threshold and returns also require approval.
 
 ## ERPNext Integration
 
-### Documents Created
-- POS Invoice (ERPNext)
-- POS Invoice (ERPNext) - standard POS stock flow
+- **Created**: POS Invoice, processed through the standard ERPNext POS stock flow.
+- **Referenced**: Item, Warehouse, Customer, Payment Method.
+- Stock decreases from the warehouse and accounting entries are created through normal ERPNext processing.
 
-### Documents Referenced
-- Item (ERPNext)
-- Warehouse (ERPNext)
-- Customer (ERPNext)
-- Payment Method (ERPNext)
+## Remarks & Attachments
 
-### Stock Ledger Impact
-- POS Invoice updates stock through normal ERPNext processing
-- Stock decreased from warehouse
-- Accounting entries created
+- Optional remarks for a normal transaction.
+- **Required** for price overrides, manual entries, returns, or any deviation.
+- Attachments: receipts, return documentation.
 
-## Remarks
+## Audit Fields
 
-### Normal Transaction
-- Optional remarks field
+Transaction ID, items sold, quantities, prices, payment method, customer, cashier, timestamp, POS Invoice reference, stock document reference, exceptions, approval, remarks.
 
-### Exception Transaction
-- **Required** remarks for:
-  - Price overrides
-  - Manual entries
-  - Returns
-  - Any deviation from standard process
+## Future Considerations (Mobile & Offline)
 
-## Attachments
-
-- Receipts
-- Return documentation
-
-## Audit Requirements
-
-Record for each POS transaction:
-- Transaction ID
-- Items sold
-- Quantities
-- Prices
-- Payment method
-- Customer
-- Cashier
-- Timestamp
-- POS Invoice reference
-- Stock Entry reference
-- Any exceptions
-- Approval if required
-- Remarks
-
-## Future Mobile Considerations
-
-- Mobile POS interface
-- Barcode scanning
-- Receipt printing
-- Offline POS queue
-- Sync when connectivity returns
-
-## Future Offline Considerations
-
-- Queue POS transactions offline
-- Sync item data for offline reference
-- Sync price data for offline reference
-- Sync stock data for offline reference
-- Conflict detection if stock already sold
-- Sync audit trail when online
+Mobile POS with barcode scanning and receipt printing. Offline: queue POS transactions, sync item/price/stock data, detect conflicts if stock was already sold, sync audit trail once online.

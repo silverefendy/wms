@@ -1,150 +1,45 @@
 # Transfer Workflow
 
-## Purpose
-Move stock between locations within the same warehouse or between warehouses.
+**Actors**: Warehouse Operator, Warehouse Manager
+**Inputs**: Transfer request, source location, destination location, items to transfer
 
-## Actors
-- Warehouse Operator
-- Warehouse Manager
+## Flow
 
-## Inputs
-- Transfer request
-- Source location
-- Destination location
-- Items to transfer
+1. Operator selects source and destination locations.
+2. System shows available stock at the source; operator selects items and quantities.
+3. Operator scans the source location; system validates sufficient stock.
+4. Operator picks and scans items against the transfer list.
+5. Operator scans the destination location; system validates it exists and is available.
+6. Operator places items and confirms quantities.
+7. Operator confirms the transfer; system creates a **Stock Entry (Material Transfer)**, updating the Stock Ledger.
 
-## Normal Flow
+## Exceptions & Approval
 
-1. **Create Transfer Request**
-   - Operator initiates transfer
-   - Operator selects source location
-   - Operator selects destination location
+| Exception | Handling | Requires Approval |
+|---|---|---|
+| Insufficient stock at source | Block transfer until resolved | — |
+| Invalid source/destination location | Alert + rescan | — |
+| Quantity mismatch (picked vs. requested) | Alert operator | Yes |
+| Damaged during transfer | Record damage, exception document | Yes |
 
-2. **Select Items**
-   - System shows available stock in source location
-   - Operator selects items to transfer
-   - Operator confirms quantities
-
-3. **Scan Source**
-   - Operator scans source location
-   - System validates source has sufficient stock
-   - System confirms source location
-
-4. **Pick Items**
-   - Operator picks items from source location
-   - Operator scans item barcodes
-   - System validates items against transfer list
-
-5. **Scan Destination**
-   - Operator scans destination location
-   - System validates destination exists
-   - System confirms destination is available
-
-6. **Place Items**
-   - Operator places items in destination
-   - Operator confirms quantities placed
-
-7. **Complete Transfer**
-   - Operator confirms transfer complete
-   - System creates ERPNext Stock Entry
-   - ERPNext updates the Stock Ledger through the standard stock-affecting document flow
-   - Stock moved from source to destination
-
-## Exceptions
-
-### Insufficient Stock
-- Source location does not have sufficient stock
-- System alerts operator
-- Transfer cannot proceed until resolved
-
-### Invalid Source Location
-- Operator scans invalid source location
-- System alerts and requires rescan
-
-### Invalid Destination Location
-- Operator scans invalid destination location
-- System alerts and requires rescan
-
-### Quantity Mismatch
-- Picked quantity does not match transfer quantity
-- System alerts operator
-- May require manager approval
-
-### Damaged During Transfer
-- Operator records damage
-- Exception document created
-- Manager approval required
-
-## Approval
-
-### Approval Triggers
-- Inter-warehouse transfer (if restricted)
-- Quantity mismatch
-- Damage during transfer
-- High-value items
-
-### Approval Process
-- Manager reviews transfer
-- Manager approves or rejects
-- System records approval decision
+Inter-warehouse transfers and high-value items may also require approval.
 
 ## ERPNext Integration
 
-### Documents Created
-- Stock Entry (ERPNext) - Material Transfer type
+- **Created**: Stock Entry (Material Transfer type).
+- **Referenced**: Item, Warehouse, WMS Location (Zone/Aisle/Rack/Shelf/Bin).
+- Stock decreases at source location and increases at destination.
 
-### Documents Referenced
-- Item (ERPNext)
-- Warehouse (ERPNext)
-- WMS Location (Zone/Aisle/Rack/Shelf/Bin)
+## Remarks & Attachments
 
-### Stock Ledger Impact
-- Stock Entry updates Stock Ledger
-- Stock decreased in source location
-- Stock increased in destination location
+- Optional remarks for normal transfers.
+- **Required** for inter-warehouse transfer, quantity mismatch, damage, or any deviation.
+- Attachments: photos of damage, transfer authorization documents.
 
-## Remarks
+## Audit Fields
 
-### Normal Transfer
-- Optional remarks field
+Item code & description, quantity, source location (full hierarchy), destination location (full hierarchy), operator, timestamp, Stock Entry reference, exceptions, approval, remarks.
 
-### Exception Transfer
-- **Required** remarks for:
-  - Inter-warehouse transfer
-  - Quantity mismatch
-  - Damage during transfer
-  - Any deviation from standard process
+## Future Considerations (Mobile & Offline)
 
-## Attachments
-
-- Photos of damage (if applicable)
-- Transfer authorization documents
-
-## Audit Requirements
-
-Record for each transfer:
-- Item code and description
-- Quantity transferred
-- Source location (full hierarchy)
-- Destination location (full hierarchy)
-- Operator who performed transfer
-- Timestamp
-- Stock Entry reference
-- Any exceptions
-- Approval if required
-- Remarks
-
-## Future Mobile Considerations
-
-- Mobile scanning interface
-- Location barcode scanning
-- Available stock display
-- Offline transfer queue
-- Sync when connectivity returns
-
-## Future Offline Considerations
-
-- Queue transfer transactions offline
-- Sync stock data for offline reference
-- Conflict detection if stock already transferred
-- Sync audit trail when online
+Mobile scanning with available-stock display. Offline: queue transfers, sync stock data locally, detect conflicts if stock was already transferred, sync audit trail once online.
