@@ -16,10 +16,21 @@ class WMSLocation(NestedSet):
 		self.validate_location_code()
 
 	def validate_location_type(self):
-		if self.location_type not in {"Warehouse", "Zone", "Aisle", "Rack", "Shelf", "Bin"}:
+		if self.location_type not in {"Warehouse", "Zone", "Aisle", "Rack", "Shelf", "Bin", "State"}:
 			frappe.throw(_("Location Type must be one of the supported WMS location types."))
 
+		if self.location_type == "State" and not self.state_name:
+			frappe.throw(_("State locations must have a State Name specified."))
+
 	def validate_parent_location(self):
+		# State locations are special: they must link to a warehouse but don't participate in the physical tree
+		if self.location_type == "State":
+			if self.parent_location:
+				frappe.throw(_("State locations cannot have a parent location in the physical tree."))
+			if not self.erpnext_warehouse:
+				frappe.throw(_("State locations must link to an ERPNext Warehouse."))
+			return
+
 		if not self.parent_location:
 			if self.location_type != "Warehouse":
 				frappe.throw(_("Only a Warehouse location can be a root location."))
@@ -67,6 +78,9 @@ class WMSLocation(NestedSet):
 		if self.location_type == "Warehouse" and not self.erpnext_warehouse:
 			frappe.throw(_("A Warehouse location must link to an ERPNext Warehouse."))
 
+		if self.location_type == "State" and not self.erpnext_warehouse:
+			frappe.throw(_("A State location must link to an ERPNext Warehouse."))
+
 		if not self.erpnext_warehouse:
 			return
 
@@ -89,3 +103,19 @@ class WMSLocation(NestedSet):
 			"WMS Location", {"location_code": self.location_code, "name": ["!=", self.name]}
 		):
 			frappe.throw(_("Location Code must be unique within the WMS location model."))
+
+		# For state locations, ensure state_name is unique per warehouse
+		if self.location_type == "State" and self.state_name and self.erpnext_warehouse:
+			existing_state = frappe.db.exists(
+				"WMS Location",
+				{
+					"location_type": "State",
+					"state_name": self.state_name,
+					"erpnext_warehouse": self.erpnext_warehouse,
+					"name": ["!=", self.name]
+				}
+			)
+			if existing_state:
+				frappe.throw(_("State '{0}' already exists for Warehouse '{1}'.").format(
+					self.state_name, self.erpnext_warehouse
+				))
