@@ -17,6 +17,6 @@ add_to_apps_screen = [
         "name": "wms",
         "logo": "/assets/wms/images/wms-logo.svg",
         "title": "WMS",
-        "route": "/app/wms",
+        "route": "/desk/wms",
     }
 ]

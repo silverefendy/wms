@@ -1,0 +1,20 @@
+{
+ "app": "wms",
+ "bg_color": "blue",
+ "creation": "2026-09-27 14:08:51.657617",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "Link",
+ "idx": 0,
+ "label": "WMS",
+ "link_to": "WMS",
+ "link_type": "Workspace Sidebar",
+ "modified": "2026-09-27 14:08:51.657617",
+ "modified_by": "Administrator",
+ "name": "WMS",
+ "owner": "Administrator",
+ "restrict_removal": 0,
+ "roles": [],
+ "standard": 0
+}

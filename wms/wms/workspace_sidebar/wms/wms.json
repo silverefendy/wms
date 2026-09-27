@@ -1,0 +1,41 @@
+{
+ "app": "wms",
+ "creation": "2026-09-27 14:04:17.993567",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "warehouse",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "scale",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Weighbridge Ticket",
+   "link_to": "WMS Weighbridge Ticket",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "package",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Bag Fill Log",
+   "link_to": "WMS Bag Fill Log",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-09-27 14:04:17.993567",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "WMS",
+ "owner": "Administrator",
+ "standard": 0,
+ "title": "WMS"
+}
