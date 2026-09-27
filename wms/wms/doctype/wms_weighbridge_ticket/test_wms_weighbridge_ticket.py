@@ -33,7 +33,7 @@ class TestWMSWeighbridgeTicket(unittest.TestCase):
 				"doctype": "Warehouse",
 				"warehouse_name": f"WMS Weighbridge Test {label} {frappe.generate_hash(6)}",
 				"company": self.company,
-				"is_group": 1,
+				"is_group": 0,
 			}
 		).insert(ignore_permissions=True)
 
@@ -83,17 +83,31 @@ class TestWMSWeighbridgeTicket(unittest.TestCase):
 		).insert(ignore_permissions=True)
 
 	def make_serial_no(self, item_code, serial_no, rfid_tag=None, qr_code=None):
-		return frappe.get_doc(
+		stock_entry = frappe.get_doc(
 			{
-				"doctype": "Serial No",
-				"serial_no": serial_no,
-				"item_code": item_code,
-				"wms_rfid_tag": rfid_tag,
-				"wms_qr_code": qr_code,
-				"warehouse": self.warehouse.name,
-				"status": "Active",
+				"doctype": "Stock Entry",
+				"stock_entry_type": "Material Receipt",
+				"company": self.company,
+				"items": [
+					{
+						"item_code": item_code,
+						"qty": 1,
+						"t_warehouse": self.warehouse.name,
+						"serial_no": serial_no,
+						"basic_rate": 1,
+					}
+				],
 			}
-		).insert(ignore_permissions=True)
+		)
+		stock_entry.insert(ignore_permissions=True)
+		stock_entry.submit()
+
+		serial_doc = frappe.get_doc("Serial No", serial_no)
+		if rfid_tag is not None:
+			serial_doc.db_set("wms_rfid_tag", rfid_tag)
+		if qr_code is not None:
+			serial_doc.db_set("wms_qr_code", qr_code)
+		return serial_doc
 
 	def make_ticket(self, ticket_number, **values):
 		data = {

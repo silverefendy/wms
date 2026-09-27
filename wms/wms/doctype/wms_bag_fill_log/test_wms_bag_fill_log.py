@@ -97,15 +97,25 @@ class TestWMSBagFillLog(unittest.TestCase):
 		).insert(ignore_permissions=True)
 
 	def make_serial_no(self, item_code, serial_no):
-		return frappe.get_doc(
+		stock_entry = frappe.get_doc(
 			{
-				"doctype": "Serial No",
-				"serial_no": serial_no,
-				"item_code": item_code,
-				"warehouse": self.warehouse.name,
-				"status": "Active",
+				"doctype": "Stock Entry",
+				"stock_entry_type": "Material Receipt",
+				"company": self.company,
+				"items": [
+					{
+						"item_code": item_code,
+						"qty": 1,
+						"t_warehouse": self.warehouse.name,
+						"serial_no": serial_no,
+						"basic_rate": 1,
+					}
+				],
 			}
-		).insert(ignore_permissions=True)
+		)
+		stock_entry.insert(ignore_permissions=True)
+		stock_entry.submit()
+		return frappe.get_doc("Serial No", serial_no)
 
 	def make_fill_log(self, fill_log_number, **values):
 		data = {
@@ -185,11 +195,12 @@ class TestWMSBagFillLog(unittest.TestCase):
 				"items": [
 					{
 						"item_code": bulk_item.name,
-						"warehouse": self.warehouse.name,
+						"t_warehouse": self.warehouse.name,
 						"qty": 1000.0,
 						"uom": "Kg",
 						"transfer_qty": 1000.0,
 						"transfer_uom": "Kg",
+								"allow_zero_valuation_rate": 1,
 					}
 				],
 			}
@@ -224,11 +235,12 @@ class TestWMSBagFillLog(unittest.TestCase):
 				"items": [
 					{
 						"item_code": bulk_item.name,
-						"warehouse": self.warehouse.name,
+						"t_warehouse": self.warehouse.name,
 						"qty": 1000.0,
 						"uom": "Kg",
 						"transfer_qty": 1000.0,
 						"transfer_uom": "Kg",
+								"allow_zero_valuation_rate": 1,
 					}
 				],
 			}

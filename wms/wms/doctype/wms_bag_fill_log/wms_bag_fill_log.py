@@ -63,7 +63,7 @@ class WMSBagFillLog(Document):
 				"items": [
 					{
 						"item_code": self.source_item,
-						"warehouse": self.source_warehouse,
+						"s_warehouse": self.source_warehouse,
 						"qty": self.qty_consumed,
 						"uom": self.uom if self.uom else frappe.db.get_value("Item", self.source_item, "stock_uom"),
 						"transfer_qty": self.qty_consumed,
@@ -73,7 +73,18 @@ class WMSBagFillLog(Document):
 					},
 					{
 						"item_code": bag_item_code,
-						"warehouse": self.source_warehouse,
+						"s_warehouse": self.source_warehouse,
+						"qty": 1,
+						"uom": frappe.db.get_value("Item", bag_item_code, "stock_uom"),
+						"transfer_qty": 1,
+						"transfer_uom": frappe.db.get_value("Item", bag_item_code, "stock_uom"),
+						"serial_no": self.bag_serial_no,
+						"is_finished_item": 0,
+						"is_sub_contracted_item": 0,
+					},
+					{
+						"item_code": bag_item_code,
+						"t_warehouse": self.source_warehouse,
 						"qty": 1,
 						"uom": frappe.db.get_value("Item", bag_item_code, "stock_uom"),
 						"transfer_qty": 1,
