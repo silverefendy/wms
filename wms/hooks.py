@@ -10,3 +10,13 @@ app_license = "Proprietary"
 
 # Custom Field Fixtures
 fixtures = [{"doctype": "Custom Field", "filters": [["dt", "in", ["Item", "Serial No"]]]}]
+
+# --- WMS Desktop Icon ---
+add_to_apps_screen = [
+    {
+        "name": "wms",
+        "logo": "/assets/wms/images/wms-logo.svg",
+        "title": "WMS",
+        "route": "/app/wms",
+    }
+]
