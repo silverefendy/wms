@@ -82,3 +82,7 @@ public/hot/
 public/js/
 public/css/
 public/assets/
+
+# Allow WMS static images (icon/logo) to be tracked
+!wms/public/images/
+!wms/public/images/**
