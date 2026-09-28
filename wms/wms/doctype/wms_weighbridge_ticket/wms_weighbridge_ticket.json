@@ -13,25 +13,34 @@
   "ticket_number",
   "ticket_datetime_in",
   "ticket_datetime_out",
+  "column_break_1",
   "vehicle_or_container_no",
+  "driver_name",
+  "seal_no",
   "operator",
+  "column_break_2",
+  "status",
+  "reference_doctype",
+  "reference_name",
   "weight_information",
   "gross_weight",
   "tare_weight",
   "net_weight",
+  "column_break_3",
   "weight_uom",
   "weight_tolerance_percent",
-  "status",
-  "reference_information",
-  "reference_doctype",
-  "reference_name",
+  "bags_section",
   "bags",
-  "remarks"
+  "notes_section",
+  "remarks",
+  "column_break_4",
+  "spill_notes"
  ],
  "fields": [
   {
    "fieldname": "ticket_information",
    "fieldtype": "Section Break",
+   "in_list_view": 0,
    "label": "Ticket Information"
   },
   {
@@ -45,22 +54,26 @@
   {
    "fieldname": "ticket_datetime_in",
    "fieldtype": "Datetime",
+   "in_list_view": 0,
    "label": "Date/Time In",
    "reqd": 1
   },
   {
    "fieldname": "ticket_datetime_out",
    "fieldtype": "Datetime",
+   "in_list_view": 0,
    "label": "Date/Time Out"
   },
   {
    "fieldname": "vehicle_or_container_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Vehicle or Container No"
   },
   {
    "fieldname": "operator",
    "fieldtype": "Link",
+   "in_list_view": 0,
    "label": "Operator",
    "options": "User",
    "reqd": 1
@@ -68,23 +81,27 @@
   {
    "fieldname": "weight_information",
    "fieldtype": "Section Break",
+   "in_list_view": 0,
    "label": "Weight Information"
   },
   {
    "fieldname": "gross_weight",
    "fieldtype": "Float",
+   "in_list_view": 0,
    "label": "Gross Weight",
    "reqd": 1
   },
   {
    "fieldname": "tare_weight",
    "fieldtype": "Float",
+   "in_list_view": 0,
    "label": "Tare Weight",
    "reqd": 1
   },
   {
    "fieldname": "net_weight",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Net Weight",
    "read_only": 1
   },
@@ -92,6 +109,7 @@
    "default": "Kg",
    "fieldname": "weight_uom",
    "fieldtype": "Link",
+   "in_list_view": 0,
    "label": "Weight UOM",
    "options": "UOM"
   },
@@ -99,6 +117,7 @@
    "default": "2",
    "fieldname": "weight_tolerance_percent",
    "fieldtype": "Float",
+   "in_list_view": 0,
    "label": "Weight Tolerance Percent"
   },
   {
@@ -112,25 +131,23 @@
    "read_only": 1
   },
   {
-   "fieldname": "reference_information",
-   "fieldtype": "Section Break",
-   "label": "Reference Information"
-  },
-  {
    "fieldname": "reference_doctype",
    "fieldtype": "Select",
+   "in_list_view": 0,
    "label": "Reference DocType",
    "options": "Delivery Note\nStock Entry\nPurchase Receipt"
   },
   {
    "fieldname": "reference_name",
    "fieldtype": "Dynamic Link",
+   "in_list_view": 0,
    "label": "Reference Name",
    "options": "reference_doctype"
   },
   {
    "fieldname": "bags",
    "fieldtype": "Table",
+   "in_list_view": 0,
    "label": "Bags",
    "options": "WMS Weighbridge Ticket Bag",
    "reqd": 1
@@ -138,11 +155,63 @@
   {
    "fieldname": "remarks",
    "fieldtype": "Small Text",
+   "in_list_view": 0,
    "label": "Remarks"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "in_list_view": 0,
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "seal_no",
+   "fieldtype": "Data",
+   "in_list_view": 0,
+   "label": "Seal No"
+  },
+  {
+   "fieldname": "spill_notes",
+   "fieldtype": "Small Text",
+   "in_list_view": 0,
+   "label": "Spill / Problem Notes"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "bags_section",
+   "fieldtype": "Section Break",
+   "in_list_view": 0,
+   "label": "Bags"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "in_list_view": 0,
+   "label": "Catatan"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
   }
  ],
  "icon": "octicon octicon-scale",
  "links": [],
+ "modified": "2026-09-28 14:27:42.975753",
  "module": "WMS",
  "name": "WMS Weighbridge Ticket",
  "permissions": [
@@ -182,5 +251,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }

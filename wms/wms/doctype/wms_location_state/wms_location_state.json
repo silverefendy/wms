@@ -11,9 +11,10 @@
  "field_order": [
   "state_name",
   "label_en",
+  "is_active",
+  "column_break_1",
   "description",
-  "description_en",
-  "is_active"
+  "description_en"
  ],
  "fields": [
   {
@@ -48,10 +49,15 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Is Active"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "octicon octicon-tag",
  "links": [],
+ "modified": "2026-09-28 14:27:42.975753",
  "module": "WMS",
  "name": "WMS Location State",
  "permissions": [
@@ -91,5 +97,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }
