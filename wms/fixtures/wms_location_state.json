@@ -1,0 +1,57 @@
+[
+ {
+  "description": "Big bag kosong, siap diisi pelet",
+  "description_en": "Empty big bag, ready to be filled with pellet",
+  "docstatus": 0,
+  "doctype": "WMS Location State",
+  "is_active": 1,
+  "label_en": "Empty",
+  "modified": "2026-09-28 07:58:13.042376",
+  "name": "Kosong",
+  "state_name": "Kosong"
+ },
+ {
+  "description": "Big bag terisi pelet, siap dikirim/disimpan",
+  "description_en": "Filled big bag, ready for storage/shipment",
+  "docstatus": 0,
+  "doctype": "WMS Location State",
+  "is_active": 1,
+  "label_en": "Filled",
+  "modified": "2026-09-28 07:58:13.048839",
+  "name": "Isi",
+  "state_name": "Isi"
+ },
+ {
+  "description": "Big bag rusak, ditarik dari sirkulasi",
+  "description_en": "Damaged big bag, withdrawn from circulation",
+  "docstatus": 0,
+  "doctype": "WMS Location State",
+  "is_active": 1,
+  "label_en": "Damaged",
+  "modified": "2026-09-28 07:58:13.049311",
+  "name": "Rusak",
+  "state_name": "Rusak"
+ },
+ {
+  "description": "Big bag hilang, tidak ditemukan saat verifikasi",
+  "description_en": "Big bag lost, not found during verification",
+  "docstatus": 0,
+  "doctype": "WMS Location State",
+  "is_active": 1,
+  "label_en": "Lost",
+  "modified": "2026-09-28 07:58:13.049987",
+  "name": "Hilang",
+  "state_name": "Hilang"
+ },
+ {
+  "description": "Big bag terjual bersama pelet ke pelanggan",
+  "description_en": "Big bag sold together with pellet to customer",
+  "docstatus": 0,
+  "doctype": "WMS Location State",
+  "is_active": 1,
+  "label_en": "Sold",
+  "modified": "2026-09-28 07:58:13.050600",
+  "name": "Terjual",
+  "state_name": "Terjual"
+ }
+]
