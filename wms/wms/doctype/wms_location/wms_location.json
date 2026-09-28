@@ -61,11 +61,11 @@
   {
    "depends_on": "eval:doc.location_type == 'State'",
    "fieldname": "state_name",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "State Name",
-   "options": "Receiving\nQuarantine\nTransit\nDamaged\nPacking\nStaging",
+   "options": "WMS Location State",
    "reqd": 0
   },
   {
