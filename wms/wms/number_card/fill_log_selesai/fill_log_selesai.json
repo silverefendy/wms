@@ -1,0 +1,20 @@
+{
+ "creation": "2026-09-28 15:07:59.302542",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "WMS Bag Fill Log",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"WMS Bag Fill Log\", \"status\", \"=\", \"Selesai\"]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Fill Log - Selesai",
+ "modified": "2026-09-28 15:07:59.302542",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "Fill Log - Selesai",
+ "owner": "Administrator",
+ "show_percentage_stats": 0,
+ "type": "Document Type"
+}

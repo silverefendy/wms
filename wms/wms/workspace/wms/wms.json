@@ -1,7 +1,7 @@
 {
  "app": "wms",
  "charts": [],
- "content": "[]",
+ "content": "[{\"id\": \"POyI2RvWCa\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Bag per Lokasi</b></span>\", \"col\": 12}}, {\"id\": \"bD65SzmiPt\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Bag di Gudang Kosong\", \"col\": 3}}, {\"id\": \"YE2UsysAur\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Bag di Gudang Isi\", \"col\": 3}}, {\"id\": \"3FXNvQvh38\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Bag Rusak\", \"col\": 3}}, {\"id\": \"dhB3JbAHEf\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Bag Hilang\", \"col\": 3}}, {\"id\": \"2MNvvxiF0F\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Bag Fill Log</b></span>\", \"col\": 12}}, {\"id\": \"fK9PLXUgCt\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Menunggu Diterima Gudang Kosong\", \"col\": 4}}, {\"id\": \"Sq4MCDccjQ\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Menunggu Diterima Gudang Isi\", \"col\": 4}}, {\"id\": \"UckrAA9oT8\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Terisi\", \"col\": 4}}, {\"id\": \"ARM49OmzA8\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Menunggu Kembali ke Gudang Kosong\", \"col\": 4}}, {\"id\": \"daIHY3ppjC\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Selesai\", \"col\": 4}}, {\"id\": \"bOtKssBsOp\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Rusak\", \"col\": 4}}, {\"id\": \"B85xt9KihH\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Fill Log - Hilang\", \"col\": 4}}, {\"id\": \"snUBucQsAd\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Weighbridge</b></span>\", \"col\": 12}}, {\"id\": \"NIt8ckwvFY\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Weighbridge - Draft\", \"col\": 4}}]",
  "creation": "2026-09-27 12:18:34.610981",
  "custom_blocks": [],
  "docstatus": 0,
@@ -14,11 +14,60 @@
  "label": "WMS",
  "link_type": "DocType",
  "links": [],
- "modified": "2026-09-27 12:18:34.610981",
+ "modified": "2026-09-28 15:38:20.950940",
  "modified_by": "Administrator",
  "module": "WMS",
  "name": "WMS",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Bag di Gudang Kosong",
+   "number_card_name": "Bag di Gudang Kosong"
+  },
+  {
+   "label": "Bag di Gudang Isi",
+   "number_card_name": "Bag di Gudang Isi"
+  },
+  {
+   "label": "Bag Rusak",
+   "number_card_name": "Bag Rusak"
+  },
+  {
+   "label": "Bag Hilang",
+   "number_card_name": "Bag Hilang"
+  },
+  {
+   "label": "Fill Log - Menunggu Diterima Gudang Kosong",
+   "number_card_name": "Fill Log - Menunggu Diterima Gudang Kosong"
+  },
+  {
+   "label": "Fill Log - Menunggu Diterima Gudang Isi",
+   "number_card_name": "Fill Log - Menunggu Diterima Gudang Isi"
+  },
+  {
+   "label": "Fill Log - Terisi",
+   "number_card_name": "Fill Log - Terisi"
+  },
+  {
+   "label": "Fill Log - Menunggu Kembali ke Gudang Kosong",
+   "number_card_name": "Fill Log - Menunggu Kembali ke Gudang Kosong"
+  },
+  {
+   "label": "Fill Log - Selesai",
+   "number_card_name": "Fill Log - Selesai"
+  },
+  {
+   "label": "Fill Log - Rusak",
+   "number_card_name": "Fill Log - Rusak"
+  },
+  {
+   "label": "Fill Log - Hilang",
+   "number_card_name": "Fill Log - Hilang"
+  },
+  {
+   "label": "Weighbridge - Draft",
+   "number_card_name": "Weighbridge - Draft"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,

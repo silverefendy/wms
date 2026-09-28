@@ -9,7 +9,11 @@ app_homepage = "https://github.com/silverefendy/wms"
 app_license = "Proprietary"
 
 # Custom Field Fixtures
-fixtures = [{"doctype": "Custom Field", "filters": [["dt", "in", ["Item", "Serial No"]]]}]
+fixtures = [
+    {"doctype": "Custom Field", "filters": [["dt", "in", ["Item", "Serial No"]], ["module", "=", "WMS"]]},
+    {"doctype": "WMS Location State"},
+    {"doctype": "Role", "filters": [["name", "=", "WMS Warehouse Manager"]]},
+]
 
 # --- WMS Desktop Icon ---
 add_to_apps_screen = [

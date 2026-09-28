@@ -1,0 +1,18 @@
+{
+ "creation": "2026-09-28 15:38:20.950940",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Serial No",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Bag di Gudang Kosong",
+ "method": "wms.wms.dashboard.bag_kosong",
+ "modified": "2026-09-28 15:38:20.950940",
+ "modified_by": "Administrator",
+ "module": "WMS",
+ "name": "Bag di Gudang Kosong",
+ "owner": "Administrator",
+ "show_percentage_stats": 0,
+ "type": "Custom"
+}

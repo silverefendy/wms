@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:state_name",
+ "creation": "2026-09-28 00:00:00.000000",
+ "default_view": "List",
+ "description": "Master list of WMS Location states (e.g. Kosong, Isi, Rusak, Hilang, Terjual). Extensible without code changes.",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "state_name",
+  "label_en",
+  "is_active",
+  "column_break_1",
+  "description",
+  "description_en"
+ ],
+ "fields": [
+  {
+   "fieldname": "state_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "State Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "label_en",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label (English)"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description (Indonesia)"
+  },
+  {
+   "fieldname": "description_en",
+   "fieldtype": "Small Text",
+   "label": "Description (English)"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "icon": "octicon octicon-tag",
+ "links": [],
+ "modified": "2026-09-28 14:27:42.975753",
+ "module": "WMS",
+ "name": "WMS Location State",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Warehouse",
+   "share": 0,
+   "write": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -12,22 +12,44 @@
   "fill_log_information",
   "fill_log_number",
   "fill_datetime",
+  "column_break_1",
   "operator",
+  "status",
+  "column_break_2",
+  "bag_serial_no",
+  "scan_bag",
   "source_information",
   "source_item",
   "source_warehouse",
-  "qty_consumed",
+  "column_break_3",
+  "qty_filled",
   "uom",
-  "bag_information",
-  "bag_serial_no",
-  "stock_entry",
-  "status",
+  "section_konfirmasi",
+  "confirmed_by_kosong",
+  "confirmed_at_kosong",
+  "confirmation_method_kosong",
+  "manual_reason_kosong",
+  "stock_entry_kosong",
+  "column_break_4",
+  "confirmed_by_isi",
+  "confirmed_at_isi",
+  "confirmation_method_isi",
+  "manual_reason_isi",
+  "stock_entry_isi",
+  "column_break_5",
+  "confirmed_by_kembali",
+  "confirmed_at_kembali",
+  "confirmation_method_kembali",
+  "manual_reason_kembali",
+  "stock_entry_kembali",
+  "section_remarks",
   "remarks"
  ],
  "fields": [
   {
    "fieldname": "fill_log_information",
    "fieldtype": "Section Break",
+   "in_list_view": 0,
    "label": "Fill Log Information"
   },
   {
@@ -42,12 +64,14 @@
    "default": "now",
    "fieldname": "fill_datetime",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Fill Date/Time",
    "reqd": 1
   },
   {
    "fieldname": "operator",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Operator",
    "options": "User",
    "reqd": 1
@@ -55,50 +79,168 @@
   {
    "fieldname": "source_information",
    "fieldtype": "Section Break",
+   "in_list_view": 0,
    "label": "Source Information"
   },
   {
    "fieldname": "source_item",
    "fieldtype": "Link",
+   "in_list_view": 0,
    "label": "Source Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "source_warehouse",
    "fieldtype": "Link",
+   "in_list_view": 0,
    "label": "Source Warehouse",
-   "options": "Warehouse",
-   "reqd": 1
+   "options": "Warehouse"
   },
   {
-   "fieldname": "qty_consumed",
+   "fieldname": "qty_filled",
    "fieldtype": "Float",
-   "label": "Qty Consumed",
-   "reqd": 1
+   "in_list_view": 1,
+   "label": "Qty Filled (Kg)"
   },
   {
    "fieldname": "uom",
    "fieldtype": "Link",
+   "in_list_view": 0,
    "label": "UOM",
    "options": "UOM"
   },
   {
-   "fieldname": "bag_information",
-   "fieldtype": "Section Break",
-   "label": "Bag Information"
+   "description": "Scan QR/RFID bag untuk mengisi Bag Serial No otomatis.",
+   "fieldname": "scan_bag",
+   "fieldtype": "Data",
+   "in_list_view": 0,
+   "label": "Scan Bag (QR/RFID)",
+   "no_copy": 1
   },
   {
    "fieldname": "bag_serial_no",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Bag Serial No",
    "options": "Serial No",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
-   "fieldname": "stock_entry",
+   "fieldname": "confirmed_by_kosong",
    "fieldtype": "Link",
-   "label": "Stock Entry",
+   "in_list_view": 0,
+   "label": "Confirmed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_at_kosong",
+   "fieldtype": "Datetime",
+   "in_list_view": 0,
+   "label": "Confirmed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmation_method_kosong",
+   "fieldtype": "Select",
+   "in_list_view": 0,
+   "label": "Confirmation Method",
+   "options": "\nScan\nManual",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.confirmation_method_kosong=='Manual'",
+   "fieldname": "manual_reason_kosong",
+   "fieldtype": "Small Text",
+   "in_list_view": 0,
+   "label": "Manual Confirmation Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_entry_kosong",
+   "fieldtype": "Link",
+   "in_list_view": 0,
+   "label": "Stock Entry (Kosong)",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_by_isi",
+   "fieldtype": "Link",
+   "in_list_view": 0,
+   "label": "Confirmed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_at_isi",
+   "fieldtype": "Datetime",
+   "in_list_view": 0,
+   "label": "Confirmed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmation_method_isi",
+   "fieldtype": "Select",
+   "in_list_view": 0,
+   "label": "Confirmation Method",
+   "options": "\nScan\nManual",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.confirmation_method_isi=='Manual'",
+   "fieldname": "manual_reason_isi",
+   "fieldtype": "Small Text",
+   "in_list_view": 0,
+   "label": "Manual Confirmation Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_entry_isi",
+   "fieldtype": "Link",
+   "in_list_view": 0,
+   "label": "Stock Entry (Isi)",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_by_kembali",
+   "fieldtype": "Link",
+   "in_list_view": 0,
+   "label": "Confirmed By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmed_at_kembali",
+   "fieldtype": "Datetime",
+   "in_list_view": 0,
+   "label": "Confirmed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmation_method_kembali",
+   "fieldtype": "Select",
+   "in_list_view": 0,
+   "label": "Confirmation Method",
+   "options": "\nScan\nManual",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.confirmation_method_kembali=='Manual'",
+   "fieldname": "manual_reason_kembali",
+   "fieldtype": "Small Text",
+   "in_list_view": 0,
+   "label": "Manual Confirmation Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_entry_kembali",
+   "fieldtype": "Link",
+   "in_list_view": 0,
+   "label": "Stock Entry (Kembali)",
    "options": "Stock Entry",
    "read_only": 1
   },
@@ -109,18 +251,59 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Draft\nCompleted\nCancelled",
-   "read_only": 1
+   "options": "Draft\nMenunggu Diterima Gudang Kosong\nTerkonfirmasi di Gudang Kosong\nMenunggu Diterima Gudang Isi\nTerisi\nMenunggu Kembali ke Gudang Kosong\nSelesai\nRusak\nHilang\nTerjual\nCancelled",
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "remarks",
    "fieldtype": "Small Text",
+   "in_list_view": 0,
    "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "section_konfirmasi",
+   "fieldtype": "Section Break",
+   "in_list_view": 0,
+   "label": "Konfirmasi Bertahap (Kosong | Isi | Kembali)"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break",
+   "in_list_view": 0,
+   "label": "Gudang Isi"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break",
+   "in_list_view": 0,
+   "label": "Kembali ke Gudang Kosong"
+  },
+  {
+   "fieldname": "section_remarks",
+   "fieldtype": "Section Break",
+   "in_list_view": 0,
+   "label": "Catatan (Remarks)"
   }
  ],
  "icon": "octicon octicon-package",
- "is_submittable": 1,
  "links": [],
+ "modified": "2026-09-28 14:27:42.975753",
  "module": "WMS",
  "name": "WMS Bag Fill Log",
  "permissions": [
@@ -157,8 +340,18 @@
    "report": 1,
    "role": "Warehouse",
    "write": 1
+  },
+  {
+   "create": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "WMS Warehouse Manager",
+   "write": 1
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }

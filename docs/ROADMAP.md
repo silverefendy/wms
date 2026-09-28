@@ -51,6 +51,8 @@ See [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) for
 the accepted design (Big Bag as serialized ERPNext Item; Weighbridge Ticket as
 a manual-entry reference document).
 
+> Update 2026-09-28: alur isi bag kini Material Transfer antar State (lihat addendum ADR-0007), bukan Manufacture. Item bertanda Manufacture di bawah perlu dibaca sesuai addendum.
+
 - [x] Big Bag Item + Serial No setup (RFID + QR fields)
 - [ ] Empty Bag → Filled Bag workflow (Stock Entry - Manufacture)
 - [ ] Filled Bag → Empty Bag reverse workflow (reuse cycle)

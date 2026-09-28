@@ -1,63 +1,33 @@
-import unittest
-
 import frappe
+from frappe.tests import IntegrationTestCase
+
+from wms.wms.doctype.wms_bag_fill_log.wms_bag_fill_log import (
+	get_bag_location,
+	resolve_bag,
+	scan_station,
+)
+
+BAG_ITEM = "TEST-WMSBF-BAG"
 
 
-class TestWMSBagFillLog(unittest.TestCase):
-	"""Validation and workflow tests for WMS Bag Fill Log."""
+class TestWMSBagFillLog(IntegrationTestCase):
+	"""Test alur Bag Fill Log. Butuh data seed WP-KOSONG dan WP-ISI di site."""
 
 	def setUp(self):
-		super().setUp()
-		self.company = self.get_or_create_company()
-		self.warehouse = self.make_warehouse("Primary")
-		self.operator = self.get_or_create_user()
+		for loc in ("WP-KOSONG", "WP-ISI"):
+			if not frappe.db.exists("WMS Location", loc):
+				self.skipTest(f"Seed data missing: WMS Location {loc}")
+		self.ensure_bag_item()
+		self.addCleanup(frappe.set_user, "Administrator")
 
-	def get_or_create_company(self):
-		company = frappe.get_all("Company", pluck="name", limit=1)
-		if company:
-			return company[0]
-
-		return frappe.get_doc(
-			{
-				"doctype": "Company",
-				"company_name": "WMS Bag Fill Test Company",
-				"abbr": "WBFTC",
-				"default_currency": "USD",
-				"country": "United States",
-			}
-		).insert(ignore_permissions=True).name
-
-	def make_warehouse(self, label):
-		return frappe.get_doc(
-			{
-				"doctype": "Warehouse",
-				"warehouse_name": f"WMS Bag Fill Test {label} {frappe.generate_hash(6)}",
-				"company": self.company,
-				"is_group": 0,
-			}
-		).insert(ignore_permissions=True)
-
-	def get_or_create_user(self):
-		user = frappe.get_all("User", {"email": "bagfill_operator@test.com"}, pluck="name", limit=1)
-		if user:
-			return user[0]
-
-		return frappe.get_doc(
-			{
-				"doctype": "User",
-				"email": "bagfill_operator@test.com",
-				"first_name": "BagFill",
-				"last_name": "Operator",
-				"send_welcome_email": 0,
-			}
-		).insert(ignore_permissions=True).name
-
-	def make_reusable_container_item(self, item_code):
-		return frappe.get_doc(
+	def ensure_bag_item(self):
+		if frappe.db.exists("Item", BAG_ITEM):
+			return
+		frappe.get_doc(
 			{
 				"doctype": "Item",
-				"item_code": item_code,
-				"item_name": item_code,
+				"item_code": BAG_ITEM,
+				"item_name": BAG_ITEM,
 				"item_group": "All Item Groups",
 				"is_stock_item": 1,
 				"has_serial_no": 1,
@@ -67,196 +37,100 @@ class TestWMSBagFillLog(unittest.TestCase):
 			}
 		).insert(ignore_permissions=True)
 
-	def make_non_reusable_item(self, item_code):
-		return frappe.get_doc(
-			{
-				"doctype": "Item",
-				"item_code": item_code,
-				"item_name": item_code,
-				"item_group": "All Item Groups",
-				"is_stock_item": 1,
-				"has_serial_no": 1,
-				"is_wms_reusable_container": 0,
-				"stock_uom": "Nos",
-				"valuation_method": "Moving Average",
-			}
-		).insert(ignore_permissions=True)
-
-	def make_bulk_pellet_item(self, item_code):
-		return frappe.get_doc(
-			{
-				"doctype": "Item",
-				"item_code": item_code,
-				"item_name": item_code,
-				"item_group": "All Item Groups",
-				"is_stock_item": 1,
-				"has_serial_no": 0,
-				"stock_uom": "Kg",
-				"valuation_method": "Moving Average",
-			}
-		).insert(ignore_permissions=True)
-
-	def make_serial_no(self, item_code, serial_no):
-		stock_entry = frappe.get_doc(
+	def receive_bag(self, serial_no, location, tag):
+		"""Material Receipt 1 bag ke lokasi tertentu, lalu isi tag RFID/QR."""
+		warehouse, company = frappe.db.get_value(
+			"WMS Location", location, ["erpnext_warehouse", "company"]
+		)
+		se = frappe.get_doc(
 			{
 				"doctype": "Stock Entry",
 				"stock_entry_type": "Material Receipt",
-				"company": self.company,
+				"purpose": "Material Receipt",
+				"company": company,
 				"items": [
 					{
-						"item_code": item_code,
+						"item_code": BAG_ITEM,
 						"qty": 1,
-						"t_warehouse": self.warehouse.name,
-						"serial_no": serial_no,
+						"uom": "Nos",
+						"t_warehouse": warehouse,
 						"basic_rate": 1,
+						"allow_zero_valuation_rate": 1,
+						"use_serial_batch_fields": 1,
+						"serial_no": serial_no,
+						"to_wms_location": location,
 					}
 				],
 			}
 		)
-		stock_entry.insert(ignore_permissions=True)
-		stock_entry.submit()
-		return frappe.get_doc("Serial No", serial_no)
+		se.insert(ignore_permissions=True)
+		se.submit()
+		frappe.db.set_value(
+			"Serial No", serial_no, {"wms_rfid_tag": f"{tag}-RFID", "wms_qr_code": f"{tag}-QR"}
+		)
+		return f"{tag}-QR", f"{tag}-RFID"
 
-	def make_fill_log(self, fill_log_number, **values):
-		data = {
-			"doctype": "WMS Bag Fill Log",
-			"fill_log_number": fill_log_number,
-			"fill_datetime": frappe.utils.now(),
-			"operator": self.operator,
-			"qty_consumed": 500.0,
-			"uom": "Kg",
-			**values,
-		}
-		return frappe.get_doc(data)
+	def test_resolve_bag_by_qr_and_rfid(self):
+		qr, rfid = self.receive_bag("TEST-WMSBF-SN-1", "WP-KOSONG", "TWB1")
+		self.assertEqual(resolve_bag(qr), "TEST-WMSBF-SN-1")
+		self.assertEqual(resolve_bag(rfid), "TEST-WMSBF-SN-1")
 
-	def test_bag_serial_not_reusable_container_rejected(self):
-		item = self.make_non_reusable_item("NON-REUSABLE-BAG")
-		serial = self.make_serial_no(item.name, "SN-NON-REUSABLE")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET")
-		log = self.make_fill_log("TEST-001", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name)
+	def test_unknown_scan_rejected(self):
 		with self.assertRaises(frappe.ValidationError):
-			log.insert(ignore_permissions=True)
+			resolve_bag("TIDAK-ADA-XYZ")
 
-	def test_qty_consumed_zero_rejected(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST")
-		serial = self.make_serial_no(item.name, "SN-ZERO-QTY")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET-2")
-		log = self.make_fill_log("TEST-002", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name, qty_consumed=0)
+	def test_single_open_log_per_bag(self):
+		qr, _rfid = self.receive_bag("TEST-WMSBF-SN-2", "WP-KOSONG", "TWB2")
+		scan_station("kirim", qr)
 		with self.assertRaises(frappe.ValidationError):
-			log.insert(ignore_permissions=True)
+			scan_station("kirim", qr)
 
-	def test_qty_consumed_negative_rejected(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST-2")
-		serial = self.make_serial_no(item.name, "SN-NEG-QTY")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET-3")
-		log = self.make_fill_log("TEST-003", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name, qty_consumed=-100)
-		with self.assertRaises(frappe.ValidationError):
-			log.insert(ignore_permissions=True)
-
-	def test_source_item_non_stock_rejected(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST-3")
-		serial = self.make_serial_no(item.name, "SN-NON-STOCK")
-		non_stock_item = frappe.get_doc(
+	def test_status_guard(self):
+		qr, _rfid = self.receive_bag("TEST-WMSBF-SN-3", "WP-KOSONG", "TWB3")
+		log = frappe.get_doc(
 			{
-				"doctype": "Item",
-				"item_code": "SERVICE-ITEM",
-				"item_name": "Service Item",
-				"item_group": "All Item Groups",
-				"is_stock_item": 0,
-				"stock_uom": "Nos",
+				"doctype": "WMS Bag Fill Log",
+				"fill_log_number": "TEST-BF-GUARD",
+				"fill_datetime": frappe.utils.now(),
+				"operator": "Administrator",
+				"bag_serial_no": "TEST-WMSBF-SN-3",
 			}
 		).insert(ignore_permissions=True)
-		log = self.make_fill_log("TEST-004", source_item=non_stock_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name)
 		with self.assertRaises(frappe.ValidationError):
-			log.insert(ignore_permissions=True)
+			log.confirm_receipt_kosong(scan_code=qr)
 
-	def test_insufficient_stock_causes_submission_failure(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST-4")
-		serial = self.make_serial_no(item.name, "SN-NO-STOCK")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET-4")
-		log = self.make_fill_log("TEST-005", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name, qty_consumed=10000.0)
-		log.insert(ignore_permissions=True)
+	def test_manual_requires_role_and_reason(self):
+		self.receive_bag("TEST-WMSBF-SN-4", "WP-KOSONG", "TWB4")
+		log = frappe.get_doc({"doctype": "WMS Bag Fill Log", "bag_serial_no": "TEST-WMSBF-SN-4"})
 		with self.assertRaises(frappe.ValidationError):
-			log.submit()
-		self.assertEqual(log.status, "Draft")
+			log._verify(None, 1, "")
+		self.assertEqual(log._verify(None, 1, "tag rusak"), "Manual")
+		frappe.set_user("Guest")
+		with self.assertRaises(frappe.ValidationError):
+			log._verify(None, 1, "tag rusak")
 
-	def test_submit_creates_stock_entry_and_sets_status_completed(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST-5")
-		serial = self.make_serial_no(item.name, "SN-SUBMIT-TEST")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET-5")
-		
-		# Add some stock to the bulk item in the warehouse
-		stock_entry = frappe.get_doc(
-			{
-				"doctype": "Stock Entry",
-				"stock_entry_type": "Material Receipt",
-				"purpose": "Material Receipt",
-				"company": self.company,
-				"items": [
-					{
-						"item_code": bulk_item.name,
-						"t_warehouse": self.warehouse.name,
-						"qty": 1000.0,
-						"uom": "Kg",
-						"transfer_qty": 1000.0,
-						"transfer_uom": "Kg",
-								"allow_zero_valuation_rate": 1,
-					}
-				],
-			}
-		)
-		stock_entry.insert(ignore_permissions=True)
-		stock_entry.submit()
+	def test_location_mismatch_rejected(self):
+		qr, _rfid = self.receive_bag("TEST-WMSBF-SN-5", "WP-ISI", "TWB5")
+		scan_station("kirim", qr)
+		with self.assertRaises(frappe.ValidationError):
+			scan_station("kosong", qr)
 
-		log = self.make_fill_log("TEST-006", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name, qty_consumed=500.0)
-		log.insert(ignore_permissions=True)
-		log.submit()
+	def test_full_cycle(self):
+		qr, rfid = self.receive_bag("TEST-WMSBF-SN-6", "WP-KOSONG", "TWB6")
+		self.assertEqual(get_bag_location("TEST-WMSBF-SN-6"), "WP-KOSONG")
 
-		self.assertEqual(log.status, "Completed")
-		self.assertIsNotNone(log.stock_entry)
-		
-		# Verify the Stock Entry exists and is submitted
-		linked_stock_entry = frappe.get_doc("Stock Entry", log.stock_entry)
-		self.assertEqual(linked_stock_entry.docstatus, 1)
-		self.assertEqual(linked_stock_entry.stock_entry_type, "Manufacture")
+		scan_station("kirim", qr)
+		scan_station("kosong", qr)
+		scan_station("mulai_isi", qr)
+		scan_station("isi", rfid, qty_filled=5)
+		self.assertEqual(get_bag_location("TEST-WMSBF-SN-6"), "WP-ISI")
 
-	def test_cancel_cancels_stock_entry_and_sets_status_cancelled(self):
-		item = self.make_reusable_container_item("BIGBAG-TEST-6")
-		serial = self.make_serial_no(item.name, "SN-CANCEL-TEST")
-		bulk_item = self.make_bulk_pellet_item("BULK-PELLET-6")
-		
-		# Add stock
-		stock_entry = frappe.get_doc(
-			{
-				"doctype": "Stock Entry",
-				"stock_entry_type": "Material Receipt",
-				"purpose": "Material Receipt",
-				"company": self.company,
-				"items": [
-					{
-						"item_code": bulk_item.name,
-						"t_warehouse": self.warehouse.name,
-						"qty": 1000.0,
-						"uom": "Kg",
-						"transfer_qty": 1000.0,
-						"transfer_uom": "Kg",
-								"allow_zero_valuation_rate": 1,
-					}
-				],
-			}
-		)
-		stock_entry.insert(ignore_permissions=True)
-		stock_entry.submit()
+		scan_station("tuang", qr)
+		result = scan_station("kembali", qr)
+		self.assertEqual(result["status"], "Selesai")
+		self.assertEqual(get_bag_location("TEST-WMSBF-SN-6"), "WP-KOSONG")
 
-		log = self.make_fill_log("TEST-007", source_item=bulk_item.name, source_warehouse=self.warehouse.name, bag_serial_no=serial.name, qty_consumed=500.0)
-		log.insert(ignore_permissions=True)
-		log.submit()
-
-		stock_entry_name = log.stock_entry
-		log.cancel()
-
-		self.assertEqual(log.status, "Cancelled")
-		
-		# Verify the Stock Entry is cancelled
-		linked_stock_entry = frappe.get_doc("Stock Entry", stock_entry_name)
-		self.assertEqual(linked_stock_entry.docstatus, 2)
+		log = frappe.get_doc("WMS Bag Fill Log", result["log"])
+		self.assertTrue(log.stock_entry_isi)
+		self.assertTrue(log.stock_entry_kembali)
+		self.assertEqual(log.confirmation_method_kembali, "Scan")

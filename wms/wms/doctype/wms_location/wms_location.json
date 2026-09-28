@@ -14,13 +14,20 @@
   "location_name",
   "location_type",
   "state_name",
+  "column_break_1",
   "parent_location",
   "erpnext_warehouse",
   "company",
   "branch",
+  "column_break_2",
+  "capacity_kg",
+  "person_in_charge",
+  "barcode",
   "is_group",
   "is_active",
+  "notes_section",
   "description",
+  "column_break_3",
   "remarks",
   "lft",
   "rgt",
@@ -61,11 +68,11 @@
   {
    "depends_on": "eval:doc.location_type == 'State'",
    "fieldname": "state_name",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "State Name",
-   "options": "Receiving\nQuarantine\nTransit\nDamaged\nPacking\nStaging",
+   "options": "WMS Location State",
    "reqd": 0
   },
   {
@@ -146,11 +153,45 @@
    "no_copy": 1,
    "options": "WMS Location",
    "read_only": 1
+  },
+  {
+   "fieldname": "capacity_kg",
+   "fieldtype": "Float",
+   "label": "Capacity (Kg)"
+  },
+  {
+   "fieldname": "person_in_charge",
+   "fieldtype": "Link",
+   "label": "Person In Charge",
+   "options": "User"
+  },
+  {
+   "fieldname": "barcode",
+   "fieldtype": "Data",
+   "label": "Barcode / QR Lokasi"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Deskripsi dan Catatan"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "octicon octicon-location",
  "is_tree": 1,
  "links": [],
+ "modified": "2026-09-28 14:27:42.975753",
  "module": "WMS",
  "name": "WMS Location",
  "nsm_parent_field": "parent_location",
@@ -183,6 +224,8 @@
    "write": 1
   }
  ],
+ "quick_entry": 0,
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1
 }
