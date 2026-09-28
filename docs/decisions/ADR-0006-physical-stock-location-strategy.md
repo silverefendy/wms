@@ -126,6 +126,21 @@ A placement ledger alongside Inventory Dimension would create two operational qu
 
 ## Runtime Validation Status
 
+### Update 2026-09-28: Partial Runtime Validation
+
+Dijalankan di Frappe 16.35.0 / ERPNext 16.36.0 pada site kerja `erp.ciptamebel.co.id` (bukan site disposable), memakai data uji `ZZ-DIM-*`.
+
+| Test area | Result | Evidence |
+|---|---|---|
+| Material Receipt serial ke lokasi | PASS | MAT-STE-2026-00034 |
+| Same-warehouse transfer (WP-KOSONG ke WP-ISI) | PASS | MAT-STE-2026-00035, 00039 |
+| Serialized item outward/inward dimension match | PASS | MAT-STE-2026-00034 sampai 00042 |
+| Manufacture dengan serial sama, satu dokumen | PASS | MAT-STE-2026-00037 |
+| Delivery Note outward dari lokasi | PASS | MAT-DN-2026-00001: hanya outward dari WP-ISI, tanpa baris masuk ke lokasi tujuan; Serial No berstatus Delivered |
+| Batch + dimension Stock Reconciliation | FINDING | InventoryDimensionNegativeStockError pada batch multi-lokasi; belum diselidiki |
+
+Baris lain pada tabel di bawah tetap NOT RUN.
+
 **Blocked — runtime environment unavailable at ADR acceptance time.** No production or existing user site was used; no runtime result is inferred from source inspection alone.
 
 Target environment: Frappe `16.34.0`, ERPNext `16.35.0`, disposable site `wms.test`. At the time this ADR was written, `bench` was not on PATH, no Bench/site was discoverable in the workspace, Docker had no usable running container, and WSL was inaccessible — so the transaction-level test plan below was **not run**, only reasoned from v16 source inspection.

@@ -18,5 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 2.5 (Wood Pellet Bagging & Weighbridge) added to roadmap
 
 ### Changed
+- ADR-0006: hasil validasi runtime parsial (Frappe 16.35.0 / ERPNext 16.36.0)
+- ADR-0007: addendum desain Bag Fill Log (Material Transfer, pellet keluar di weighbridge)
 - Consolidated root-level status/roadmap/changelog/security docs into `docs/`
 - Merged physical stock location architecture and its runtime validation report into ADR-0006

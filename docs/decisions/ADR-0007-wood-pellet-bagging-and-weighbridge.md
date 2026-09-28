@@ -137,6 +137,13 @@ A new custom DocType, **`WMS Weighbridge Ticket`**, is introduced with this scop
   reference/verification document; the Delivery Note (or equivalent) remains
   the actual stock-affecting transaction.
 
+## Addendum 2026-09-28: Bag Fill Log (perubahan desain)
+
+- Pengisian bag tidak lagi memakai Stock Entry Manufacture. Setiap perpindahan bag adalah Material Transfer satu serial antar `WMS Location` bertipe State (Kosong, Isi, Rusak, Hilang) dalam satu warehouse.
+- Stok pellet keluar saat ditimbang di weighbridge, bukan saat bag diisi.
+- Bag terjual dicatat sebagai outward dari lokasi Isi lewat Delivery Note; status terjual dibaca dari Serial No berstatus Delivered.
+- Konfirmasi tiap tahap wajib scan QR/RFID; bypass manual hanya untuk role `WMS Warehouse Manager` dengan alasan wajib.
+
 ## Related Decisions
 - [ADR-0001: ERPNext Stock as System of Record](ADR-0001-erpnext-stock-as-system-of-record.md)
 - [ADR-0003: ERPNext Item and Variant Master](ADR-0003-erpnext-item-and-variant-master.md)
