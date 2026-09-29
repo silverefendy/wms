@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted, with runtime validation pending
+Superseded by [ADR-0008](ADR-0008-jumbo-bag-location-via-erpnext-warehouse.md) (2026-09-29). Previously: Accepted, with runtime validation pending.
 
 ## Context
 
@@ -173,3 +173,4 @@ The next implementation phase should build the Inventory Dimension configuration
 - [ADR-0001: ERPNext Stock as System of Record](ADR-0001-erpnext-stock-as-system-of-record.md)
 - [ADR-0005: WMS Physical Location Model](ADR-0005-wms-physical-location-model.md)
 - [ADR-0007: Wood Pellet Bagging and Weighbridge Boundary](ADR-0007-wood-pellet-bagging-and-weighbridge.md)
+- [ADR-0008: Lokasi Jumbo Bag Memakai ERPNext Warehouse](ADR-0008-jumbo-bag-location-via-erpnext-warehouse.md) (supersedes this ADR)
