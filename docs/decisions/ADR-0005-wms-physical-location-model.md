@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by [ADR-0008](ADR-0008-jumbo-bag-location-via-erpnext-warehouse.md) (2026-09-29). Previously: Accepted.
 
 ## Decision
 
