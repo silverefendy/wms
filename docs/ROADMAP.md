@@ -1,5 +1,7 @@
 # Roadmap
 
+Updated: 2026-09-29 10:30 WIB
+
 ## Phase 0 — Foundation
 
 **Status**: Complete
@@ -16,7 +18,9 @@
 
 ## Phase 1 — Master Data Integration
 
-**Status**: Not Started
+**Status**: In Progress
+
+> Update 2026-09-29: WMS Location Tree, WMS Location State and the Inventory Dimension `WMS Location` are implemented. Location-type coverage in the New dialog is confirmed only for Warehouse; Zone to Bin are not yet verified, so the items below stay unchecked.
 
 - [ ] Item integration with ERPNext
 - [ ] Item Variant integration
@@ -45,7 +49,7 @@
 
 ## Phase 2.5 — Wood Pellet Bagging & Weighbridge
 
-**Status**: Not Started
+**Status**: In Progress
 
 See [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) for
 the accepted design (Big Bag as serialized ERPNext Item; Weighbridge Ticket as
@@ -53,8 +57,10 @@ a manual-entry reference document).
 
 > Update 2026-09-28: alur isi bag kini Material Transfer antar State (lihat addendum ADR-0007), bukan Manufacture. Item bertanda Manufacture di bawah perlu dibaca sesuai addendum.
 
+> Update 2026-09-29: WMS Bag Fill Log (Scan Station) dan WMS Location State sudah diimplementasikan dan di-merge ke `main`. Verifikasi di perangkat nyata (HP / RFID reader) belum dilakukan.
+
 - [x] Big Bag Item + Serial No setup (RFID + QR fields)
-- [ ] Empty Bag → Filled Bag workflow (Stock Entry - Manufacture)
+- [x] Empty Bag → Filled Bag workflow (implemented as WMS Bag Fill Log with staged scanning; see ADR-0007 addendum)
 - [ ] Filled Bag → Empty Bag reverse workflow (reuse cycle)
 - [ ] Big Bag damage / write-off exception flow
 - [ ] Big Bag sold-with-shipment flow (own line item on Delivery Note/Sales Invoice)
@@ -62,6 +68,7 @@ a manual-entry reference document).
 - [x] WMS Weighbridge Ticket DocType (manual entry; bag/RFID child table; link to Delivery Note)
 - [ ] Weight/quantity mismatch exception + approval flow
 - [ ] Periodic RFID-based location verification report (WMS Location vs. last scan)
+- [x] Dashboard Number Cards (Bag per Lokasi, Fill Log and Weighbridge status)
 - [ ] (Future, deferred) Integration with existing weighbridge application/hardware
 
 ## Phase 3 — Purchasing Integration

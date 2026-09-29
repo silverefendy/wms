@@ -16,9 +16,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Workflow documentation templates
 - ADR-0007: Wood pellet bagging and weighbridge boundary
 - Phase 2.5 (Wood Pellet Bagging & Weighbridge) added to roadmap
+- WMS Bag Fill Log with staged Scan Station (QR/RFID)
+- WMS Location State (Kosong, Isi, Rusak, Hilang, Terjual)
+- Dashboard and Number Cards, including 4 "Bag per Lokasi" cards
+- Location Tree JS (ERPNext Warehouse and State Name fields in the New dialog)
+- Patch `setup_inventory_dimension` (idempotent) creating the `WMS Location` Inventory Dimension
+- Fixtures: role `WMS Warehouse Manager`, WMS Location State
 
 ### Changed
+- WMS Location: `quick_entry` disabled, default view is List
+- `hooks.py`: Custom Field fixture filter narrowed with `module=WMS`
 - ADR-0006: hasil validasi runtime parsial (Frappe 16.35.0 / ERPNext 16.36.0)
 - ADR-0007: addendum desain Bag Fill Log (Material Transfer, pellet keluar di weighbridge)
 - Consolidated root-level status/roadmap/changelog/security docs into `docs/`
 - Merged physical stock location architecture and its runtime validation report into ADR-0006
+- PROJECT_STATUS and ROADMAP updated to match implemented components
+
+### Operations
+- 2026-09-29: all test data removed from the working site (test companies, items, stock transactions, test users and roles). Clean-state backup taken. `bench run-tests` must not be run on the working site.
