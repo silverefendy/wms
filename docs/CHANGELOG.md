@@ -33,4 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PROJECT_STATUS and ROADMAP updated to match implemented components
 
 ### Operations
-- 2026-09-29: all test data removed from the working site (test companies, items, stock transactions, test users and roles). Clean-state backup taken. `bench run-tests` must not be run on the working site.
+- 2026-09-29: all test data removed from the working site (test companies, items, stock transactions, test users and roles, test locations PLTB and CMR). Clean-state backup taken (`20260929_072949`). `bench run-tests` must not be run on the working site.
+- 2026-09-29: timezone check found System Settings at Asia/Kolkata while user time zones are Asia/Jakarta. Target is Asia/Jakarta; change pending.
+- 2026-09-29: RFID handheld plan recorded (smartphone-connected reader, APK not yet built).

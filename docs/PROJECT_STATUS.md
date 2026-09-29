@@ -1,6 +1,6 @@
 # Project Status
 
-Updated: 2026-09-29 10:30 WIB
+Updated: 2026-09-29 09:30 WIB
 
 ## Current Phase
 
@@ -34,15 +34,29 @@ Not verified: Scan Station on a real phone or RFID reader, and New Tree View dia
 
 ## Data Cleanup (2026-09-29)
 
-All test data was removed from the working site `erp.ciptamebel.co.id`: test companies, test items, stock transactions (Stock Entry, Stock Ledger Entry, GL Entry, Bin, Serial No, Serial and Batch Bundle), Repost Item Valuation queue, test users and roles. Some phases used raw SQL and forced `docstatus=2` on test-only documents.
+All test data was removed from the working site `erp.ciptamebel.co.id`: test companies, test items, stock transactions (Stock Entry, Stock Ledger Entry, GL Entry, Bin, Serial No, Serial and Batch Bundle), Repost Item Valuation queue, test users and roles, and the test locations PLTB and CMR. Some phases used raw SQL and forced `docstatus=2` on test-only documents.
 
-Remaining after cleanup: company `Cipta Mebelindo Lestari` (220 accounts, 3 warehouses), WMS Location and WMS Location State records, the Inventory Dimension, Custom Fields.
+Remaining after cleanup: company `Cipta Mebelindo Lestari` (220 accounts, 3 warehouses: `All Warehouses - CML`, `Stores - CML`, `Wood Pellet - CML`), 5 WMS Location records of type State (WP-KOSONG, WP-ISI, WP-RUSAK, WP-HILANG, WP-TERJUAL), 5 WMS Location State records, the Inventory Dimension, Custom Fields. Users: Administrator, Guest, `support@ciptamebel.co.id`.
 
-Clean-state backup: `20260929_072949` (site timezone Asia/Kolkata).
+Clean-state backup: `20260929_072949` (file names use the site timezone, currently Asia/Kolkata). It was taken before PLTB and CMR were deleted.
 
 Lessons recorded:
 - `bench run-tests` on the working site recreates fixture data. Use a separate test site.
 - ERPNext refuses to delete a warehouse that ever had a Stock Ledger Entry, even a cancelled one.
+- A parent Company can only be deleted after its child companies are gone.
+- `Repost Item Valuation` documents block deletion of an Item and cannot be cancelled while cancelled-document processing is pending.
+
+## Timezone
+
+Checked 2026-09-29 09:22 WIB:
+
+| Setting | Value |
+|---|---|
+| System Settings time zone | Asia/Kolkata |
+| User time zone (Administrator, Guest, support@) | Asia/Jakarta |
+| Server / MariaDB clock | UTC (`SYSTEM`) |
+
+Decision: the site should use **Asia/Jakarta**. The System Settings value has not been changed yet, so stored `creation` timestamps are still in Asia/Kolkata (1 h 30 min ahead of WIB). Change it in System Settings, then run `bench restart`.
 
 ## Not Implemented Yet
 
@@ -52,11 +66,15 @@ Lessons recorded:
 - Offline synchronization architecture (Phase 7)
 
 ### Planned (not yet designed)
-- Mobile UI (there is no dedicated scan page; scanning lives in the Bag Fill Log form)
-- RFID hardware integration
+- Mobile UI and Android app (APK). There is no dedicated scan page; scanning lives in the Bag Fill Log form
+- RFID hardware integration (see plan below)
 - Filled Bag to Container loading, damage/write-off flow, weight-mismatch approval flow
 - RFID-based location verification report
 - Advanced manufacturing integration
+
+### RFID handheld plan (2026-09-29)
+
+The Scan Station will later be used with an RFID handheld reader connected to a smartphone. The APK does not exist yet. Reader model and output mode are not yet known. If the reader has a keyboard (HID) mode, the Scan Station can be used in the phone browser without an APK, provided the typed tag value matches the RFID field on Serial No. If the reader only works through a vendor SDK, an intermediary app is needed and this becomes Phase 6 work with its own ADR.
 
 ### Status Legend
 
@@ -68,10 +86,12 @@ Lessons recorded:
 
 ## Open Items
 
-1. Site timezone reads as Asia/Kolkata in code and System Settings; clarify the intended setting.
-2. ADR-0006 runtime validation is still partial; see the ADR for the per-row status.
-3. Set up a separate test site before further automated testing.
-4. Verify Scan Station on the real device (phone or RFID reader) before production use.
+1. Change the System Settings time zone to Asia/Jakarta and restart the bench.
+2. Identify the RFID handheld model and whether it has a keyboard (HID) mode.
+3. Verify Scan Station on the real device (phone plus RFID reader) before production use.
+4. ADR-0006 runtime validation is still partial; see the ADR for the per-row status.
+5. Set up a separate test site before further automated testing (deferred by decision).
+6. Confirm the New Tree View dialog for Zone, Aisle, Rack, Shelf and Bin.
 
 ## Next Steps
 

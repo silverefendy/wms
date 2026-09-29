@@ -1,6 +1,6 @@
 # Roadmap
 
-Updated: 2026-09-29 10:30 WIB
+Updated: 2026-09-29 09:30 WIB
 
 ## Phase 0 — Foundation
 
@@ -109,6 +109,8 @@ a manual-entry reference document).
 ## Phase 6 — Mobile
 
 **Status**: Not Started
+
+> Update 2026-09-29: the Scan Station is planned to be used with an RFID handheld reader connected to a smartphone. The APK is not built yet. Reader model and output mode (keyboard/HID versus vendor SDK) are still unknown. With HID mode, the browser-based Scan Station may work without an APK; with SDK-only readers, an intermediary app and a new ADR are needed.
 
 - [ ] Android/tablet support
 - [ ] Mobile scanning
