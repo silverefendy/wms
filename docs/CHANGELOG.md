@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Patch `setup_inventory_dimension` (idempotent) creating the `WMS Location` Inventory Dimension
 - Fixtures: role `WMS Warehouse Manager`, WMS Location State
 - ADR-0008 (Proposed): Jumbo Bag location via ERPNext Warehouse, superseding ADR-0005 and ADR-0006
-- WMS Bag Transfer (branch `feat/wms-bag-transfer`, not yet merged; automated tests not yet run)
+- WMS Bag Transfer and WMS Bag Transfer Item DocTypes (merged to `main` via PR #9, 2026-09-30); its automated tests and browser UI tests have not been run yet
 
 ### Changed
 - WMS Location: `quick_entry` disabled, default view is List
@@ -34,11 +34,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Merged physical stock location architecture and its runtime validation report into ADR-0006
 - PROJECT_STATUS and ROADMAP updated to match implemented components
 - ADR-0008 (2026-09-30): added test result P1 (one Stock Entry row per bag preserves per-Serial No valuation, no GL from transfer), decision 10 (one row per bag; Stock Reconciliation must not be used for bags), and deferral of cost/GL design
+- `post_transfer` in WMS Bag Transfer now posts one Stock Entry row per bag (qty 1, one Serial No per row) so valuation stays per Serial No (commit `cbdb759`)
+- ROADMAP and docs/README updated for ADR-0008 and Bag Transfer (2026-09-30)
+
+### Fixed
+- Dashboard "Bag per Lokasi" cards failed with `Unknown column 'sle.target_wms_location'`. They now read `Serial No.warehouse` and map stages by Warehouse name (PR #8, commit `bec9580`). Verified in the browser on `test.local`: Kosong 15, Isi 7, Rusak 1, Hilang 0.
 
 ### Known Issues
 - Bag Transfer is not yet listed in the WMS workspace sidebar (`wms/wms/workspace_sidebar/wms/wms.json` still lists Location, Location State, Bag Fill Log).
-- Dashboard "Bag per Lokasi" cards query a column that does not exist on the test site; a fix is prepared on a separate branch and not yet merged.
+- Dashboard stage mapping (Kosong, Isi, Rusak, Hilang) is a constant in code; ADR-0008 decision 1 asks for configuration.
+- `get_bag_location` in `wms_bag_fill_log.py` still uses the removed column; left untouched because Bag Fill Log is to be retired.
 - Manual confirmation method has no UI path; it is reachable only through the server method `confirm_receipt`.
+- Item `Jumbo Bag WP` has `has_serial_no = 0` and no Serial No; no decision yet.
 
 ### Operations
 - 2026-09-29: all test data removed from the working site (test companies, items, stock transactions, test users and roles, test locations PLTB and CMR). Clean-state backup taken (`20260929_072949`). `bench run-tests` must not be run on the working site.
