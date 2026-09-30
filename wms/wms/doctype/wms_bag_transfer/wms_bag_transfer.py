@@ -72,23 +72,18 @@ class WMSBagTransfer(Document):
 
 	def post_transfer(self, serials):
 		"""Satu Stock Entry Material Transfer untuk semua bag yang diterima."""
-		by_item = {}
-		for serial in serials:
-			item_code = frappe.db.get_value("Serial No", serial, "item_code")
-			by_item.setdefault(item_code, []).append(serial)
-
 		items = []
-		for item_code in sorted(by_item):
-			bag_serials = sorted(by_item[item_code])
+		for serial in sorted(serials):
+			item_code = frappe.db.get_value("Serial No", serial, "item_code")
 			items.append(
 				{
 					"item_code": item_code,
-					"qty": len(bag_serials),
+					"qty": 1,
 					"uom": frappe.db.get_value("Item", item_code, "stock_uom"),
 					"s_warehouse": self.source_warehouse,
 					"t_warehouse": self.target_warehouse,
 					"use_serial_batch_fields": 1,
-					"serial_no": "\n".join(bag_serials),
+					"serial_no": serial,
 				}
 			)
 
