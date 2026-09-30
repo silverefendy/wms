@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed (draft 2026-09-29; diperbarui 2026-09-30 dengan hasil verifikasi di test.local). Menggantikan ADR-0005 dan ADR-0006.
+Proposed (draft 2026-09-29; diperbarui 2026-09-30 dengan hasil verifikasi di test.local, termasuk uji P1). Menggantikan ADR-0005 dan ADR-0006.
 Mengubah Addendum 2026-09-28 pada ADR-0007 (ADR-0007 belum diedit). ADR-0001 dan ADR-0003 tetap berlaku.
 
 Verifikasi teknis di site uji sudah selesai (lihat "Hasil Verifikasi"). Perubahan status menjadi Accepted menunggu persetujuan Efendy.
@@ -31,8 +31,9 @@ Kondisi terverifikasi per 2026-09-29 (site `erp.ciptamebel.co.id`):
 5. Rusak bersifat final. Hilang dapat kembali ke siklus dengan catatan. Retur menanyakan kembali ke Kosong atau selesai. Approval Rusak/Hilang bersifat opsional.
 6. Stok pellet ERPNext tidak dikurangi pada tahap awal. Rata-rata pellet per bag (netto container dibagi jumlah bag, bag yang ikut container diberi penanda) menjadi informasi tambahan di Weighbridge Ticket (fase terpisah).
 7. Dihentikan dan dihapus (setelah ADR ini diterima): WMS Location (semua tipe), WMS Location State, Inventory Dimension `WMS Location`, WMS Bag Fill Log beserta dashboard-nya, dan patch `setup_inventory_dimension`. Kebutuhan rack/bin di masa depan dikonfigurasi di ERPNext.
-8. Valuasi (harga) bag: pada tahap awal bag didaftarkan dengan valuation nol (`allow_zero_valuation_rate`). Pencatatan harga bag ditunda ke fase terpisah (dinyatakan Efendy, 2026-09-30). Berat bag dianggap nol pada tiket timbangan (tidak berubah).
+8. Valuasi (harga) bag: pada tahap awal bag didaftarkan dengan valuation nol (`allow_zero_valuation_rate`). Pencatatan harga bag ditunda ke fase terpisah (dinyatakan Efendy, 2026-09-30). Berat bag dianggap nol pada tiket timbangan (tidak berubah). Catatan 2026-09-30: uji P1 membuktikan bahwa bag bernilai lebih dari nol pun tetap terjaga nilainya per Serial No selama transfer memakai satu baris Stock Entry per bag (keputusan 10). Desain beban/GL (akun beban, pembagian nilai per siklus) belum menjadi fokus dan ditunda; bag bernilai lebih dari nol tidak didaftarkan di produksi sebelum desain itu selesai.
 9. Koreksi transfer yang sudah terkonfirmasi dilakukan dengan transfer balik, bukan pembatalan Stock Entry lama (lihat temuan T7).
+10. `post_transfer` membuat satu baris Stock Entry per bag (`qty` 1, `serial_no` satu Serial No per baris), bukan satu baris berisi banyak serial. Alasan: nilai (valuation) tersimpan per Serial No di `Serial and Batch Entry`; satu baris banyak serial merata-ratakan nilai antar bag. Stock Reconciliation tidak boleh dipakai untuk memperbaiki lokasi atau nilai bag, karena bekerja per Item + Warehouse, bukan per Serial No.
 
 ## Alternatif
 
@@ -54,6 +55,7 @@ Kondisi terverifikasi per 2026-09-29 (site `erp.ciptamebel.co.id`):
 - Stock Entry manual di ERPNext dapat melewati konfirmasi WMS (perlu kontrol izin).
 - Warehouse grup tidak dapat dipakai dalam transaksi.
 - Pembatalan Stock Entry transfer hanya bisa berurutan per bag (lihat T7).
+- Satu baris Stock Entry per bag membuat dokumen lebih panjang untuk transfer bag banyak (perlu diukur pada volume besar).
 
 ## Hasil Verifikasi (site uji `test.local`, 2026-09-29 s.d. 2026-09-30)
 
@@ -68,14 +70,17 @@ Lingkungan: ERPNext 16.36.1, Frappe 16.35.0; Company perpetual inventory aktif, 
 | T7 Cancel transfer lama ketika bag sudah dipindah lagi | Ditolak (`SerialNoExistsInFutureTransactionError`). Stock Entry tetap submitted | traceback + select |
 | T8 Material Receipt bag bernilai 100000 (tanpa allow zero) | GL terbentuk: debit `1141.000 - Persediaan Barang`, kredit `5110.020 - Penyesuaian Stock` | select GL |
 | T9 Transfer bag bernilai antar Warehouse leaf | Berhasil. SLE -100000 dan +100000. GL tidak bertambah | select SLE, GL |
+| P1 `WMS Bag Transfer` WBT-2026-00005: `send_transfer` lalu `confirm_by_scan` untuk 2 bag (TJW-003, TJW-004), Kosong ke Isi | Berhasil. Stock Entry MAT-STE-2026-00025 berisi 2 baris (qty 1); nilai per Serial No terjaga (60000 dan 40000) dari `Serial and Batch Entry`; tanpa GL baru; status Diterima; kedua bag Active di Isi. Jumlah dokumen: SE 24 ke 25, SLE 66 ke 70, GL tetap 26, WBT 4 ke 5 | select WBT, SE, SLE, Serial and Batch Entry, GL |
 
 Kesimpulan:
 
 - Hipotesis "transfer antar Warehouse dengan akun persediaan yang sama tidak menimbulkan selisih GL" terbukti pada uji ini. Berlaku selama semua Warehouse tahap memakai akun default Company.
 - Bag bernilai nol tidak menimbulkan GL. Bag bernilai lebih dari nol yang diterima lewat Material Receipt menimbulkan jurnal ke Penyesuaian Stock; ini yang menjadi alasan keputusan 8.
+- Nilai per Serial No dibaca dari `Serial and Batch Entry`; field `purchase_rate` pada Serial No tetap 0 dan tidak boleh dijadikan sumber nilai.
 - Lokasi bag dapat dibaca dari `Serial No.warehouse` tanpa SQL ke Stock Ledger Entry.
+- Stock Reconciliation tidak aman untuk bag (bekerja per Item + Warehouse).
 
-Belum diuji: cancel setelah bag tidak dipindah lagi, transfer Serial No dengan lebih dari satu Company, perilaku di produksi, dan `WMS Bag Transfer` itu sendiri.
+Belum diuji: uji browser skenario U1 s.d. U5, U9, U10 pada `WMS Bag Transfer`; jalur Manual (hanya bisa lewat pemanggilan server `confirm_receipt` dengan `method: "Manual"`, dialog UI hanya menerima kode scan); 10 tes otomatis `test_wms_bag_transfer.py`; cancel setelah bag tidak dipindah lagi; banyak bag, tanggal mundur, dan volume besar; transfer Serial No lintas Company; perilaku di produksi.
 
 Catatan alat uji: `bench execute --kwargs` di-parse dengan `eval` (literal Python, bukan JSON), dan `frappe.client.submit` membutuhkan dict dokumen lengkap. Di kode aplikasi gunakan `frappe.get_doc({...}).insert()` lalu `.submit()` pada objek yang sama.
 
