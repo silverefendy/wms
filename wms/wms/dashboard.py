@@ -1,37 +1,38 @@
 import frappe
 
-LOCATIONS = {
-    "kosong": "WP-KOSONG",
-    "isi": "WP-ISI",
-    "rusak": "WP-RUSAK",
-    "hilang": "WP-HILANG",
+# Pemetaan kartu -> warehouse_name tahap (ADR-0008 butir 1).
+STAGES = {
+    "kosong": "Kosong",
+    "isi": "Isi",
+    "rusak": "Rusak",
+    "hilang": "Hilang",
 }
+GROUP_PREFIX = "WMS Jumbo Bag"
 MAX_NAMES = 300
 
 
-def _bags_at(location):
+def _bags_at(stage):
+    """Serial No bag Active yang berada di Warehouse tahap tertentu."""
     frappe.has_permission("Serial No", "read", throw=True)
-    rows = frappe.db.sql(
+    return frappe.db.sql_list(
         """
-        select sabe.serial_no,
-               sum(case when sabe.is_outward = 1 then -abs(sabe.qty) else abs(sabe.qty) end) as net
-        from `tabStock Ledger Entry` sle
-        join `tabSerial and Batch Entry` sabe on sabe.parent = sle.serial_and_batch_bundle
-        join `tabSerial No` sn on sn.name = sabe.serial_no
+        select sn.name
+        from `tabSerial No` sn
         join `tabItem` i on i.name = sn.item_code
-        where sle.is_cancelled = 0
-          and sle.target_wms_location = %s
+        join `tabWarehouse` w on w.name = sn.warehouse
+        join `tabWarehouse` p on p.name = w.parent_warehouse
+        where sn.status = 'Active'
           and i.is_wms_reusable_container = 1
-        group by sabe.serial_no
-        having net > 0
+          and w.warehouse_name = %s
+          and p.name like %s
+        order by sn.name
         """,
-        location,
+        (stage, GROUP_PREFIX + "%"),
     )
-    return [r[0] for r in rows]
 
 
 def _card(key):
-    names = _bags_at(LOCATIONS[key])
+    names = _bags_at(STAGES[key])
     result = {"value": len(names), "fieldtype": "Int", "route": ["List", "Serial No"]}
     if not names:
         result["route_options"] = {"name": "-"}
