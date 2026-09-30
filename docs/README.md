@@ -22,7 +22,7 @@ This directory contains the complete documentation for the WMS project.
 - [Data Model](architecture/data-model.md) - Conceptual data model
 - [Permissions](architecture/permissions.md) - Access control design
 - [Integration](architecture/integration.md) - ERPNext integration points
-- [WMS Location Model](architecture/wms-location-model.md) - Physical location hierarchy
+- [WMS Location Model](architecture/wms-location-model.md) - Physical location hierarchy (superseded by ADR-0008 once accepted)
 
 ### [Workflows](workflows/)
 - [Receiving](workflows/receiving.md)
@@ -49,9 +49,10 @@ This directory contains the complete documentation for the WMS project.
 - [ADR-0002](decisions/ADR-0002-wms-application-boundary.md) - WMS application boundary
 - [ADR-0003](decisions/ADR-0003-erpnext-item-and-variant-master.md) - ERPNext item and variant master
 - [ADR-0004](decisions/ADR-0004-offline-first-design.md) - Offline-first design
-- [ADR-0005](decisions/ADR-0005-wms-physical-location-model.md) - WMS physical location model
-- [ADR-0006](decisions/ADR-0006-physical-stock-location-strategy.md) - Physical stock location strategy (Inventory Dimension), including architecture detail and runtime validation status
+- [ADR-0005](decisions/ADR-0005-wms-physical-location-model.md) - WMS physical location model (superseded by ADR-0008, proposed)
+- [ADR-0006](decisions/ADR-0006-physical-stock-location-strategy.md) - Physical stock location strategy (Inventory Dimension), including architecture detail and runtime validation status (superseded by ADR-0008, proposed)
 - [ADR-0007](decisions/ADR-0007-wood-pellet-bagging-and-weighbridge.md) - Wood pellet bagging, big bag lifecycle, and weighbridge boundary
+- [ADR-0008](decisions/ADR-0008-jumbo-bag-location-via-erpnext-warehouse.md) - Jumbo Bag location via ERPNext Warehouse, WMS Bag Transfer (status: Proposed)
 
 ### [Testing](testing/)
 - [Foundation Validation](testing/foundation-validation.md) - Disposable Frappe/ERPNext installation gate
